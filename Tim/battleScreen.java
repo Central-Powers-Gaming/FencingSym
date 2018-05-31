@@ -35,15 +35,15 @@ class batl extends JComponent{
 			if(i<5){
 				g.drawImage(Star,(int)(Tw-(Tw*(double).9))+(100*i), (int)(Th-(Th*(double).95))-(int)(Th-(Th*(double).95))-Th/100, 100, 100, null);
 			}else{
-				g.drawImage(Star,(int)(Tw-(Tw*(double).9))+(100*i)+100, (int)(Th-(Th*(double).95))-(int)(Th-(Th*(double).95))-Th/100, 100, 100, null);
+				g.drawImage(Star,(int)(Tw-(Tw*(double).9))+(100*i)+(100*Tw/354), (int)(Th-(Th*(double).95))-(int)(Th-(Th*(double).95))-Th/100, 100, 100, null);
 			}
 		}
 		//points
 		for(int i=/*player.getScore()*/1;i>0;i--){
 			g.drawImage(StarFill,(int)(Tw-(Tw*(double).9))+(500)-(100*i), (int)(Th-(Th*(double).95))-(int)(Th-(Th*(double).95))-Th/100, 100, 100, null);
 		}
-		for(int i=/*ai.getScore()*/0+5;i>5;i--){
-			g.drawImage(StarFill,(int)(Tw-(Tw*(double).9))+(100*i), (int)(Th-(Th*(double).95))-(int)(Th-(Th*(double).95))-Th/100, 100, 100, null);
+		for(int i=/*ai.getScore()*/4+5;i>5;i--){
+			g.drawImage(StarFill,(int)(Tw-(Tw*(double).9))+(100*i)+(100*Tw/354)-100, (int)(Th-(Th*(double).95))-(int)(Th-(Th*(double).95))-Th/100, 100, 100, null);
 		}
 		g.setColor(Color.WHITE);
 		g.setFont(new Font("Courier New", 0, 70));
@@ -77,5 +77,7 @@ public class battleScreen {
 		battle.setExtendedState(JFrame.MAXIMIZED_BOTH); 
 		battle.setUndecorated(true);
 		battle.setVisible(true);
+		FileIo a=new FileIo();
+		a.music("7.wav");//"Future Gladiator.wav"    "Neo Western.wav"  "7.wav"
 	}//end main
 }
