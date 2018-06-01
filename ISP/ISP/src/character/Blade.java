@@ -2,13 +2,18 @@ package character;
 
 import java.awt.Point;
 import java.awt.geom.Line2D;
-import java.awt.geom.Point2D.Double;
 import java.awt.image.BufferedImage;
 
 public class Blade {
+/* CHANGES OF HANDLE NEED TO BE ACOUNTED FOR AND COMPLETED
+ * UPDATE CODE WHEN MORE INFORMATIONABOUT SPRITES ARE DECIDED
+ * POSSIBLE THING TO DO
+ * 		MAKE bLADE EXTEND LINE INSTEAD OF HAVE IT CONTAINED
+ * 		ADD DEFAULT VALUES JUST IN CASE
+ */
 private boolean control;
 private Line2D.Double line;
-private int length;
+private double length;
 private int Speed;
 private int XSpeed;
 private int YSpeed;
@@ -20,11 +25,14 @@ public int lungeCD;
 public int lunge;
 public BufferedImage pic;
 private Point.Double target;
+public String Name;
 //constructor
-public Blade(int length, int speed, Point.Double handle,Point.Double tip, int block, int lunge, BufferedImage pic) {
+public Blade(String Name,int speed, Point.Double handle,Point.Double tip, int block, int lunge, BufferedImage pic) {
 	super();
+	this.Name=Name;
 	control=true;
-	this.length = length;
+	this.tip=ontoCircle(tip,handle,length);
+	this.length =Math.sqrt((this.tip.x-handle.x)*(this.tip.x-handle.x)+(this.tip.y-handle.y)*(this.tip.y-handle.y));
 	Speed = speed;
 	this.handle = handle;
 	this.block = block;
@@ -32,15 +40,14 @@ public Blade(int length, int speed, Point.Double handle,Point.Double tip, int bl
 	this.pic = pic;
 	XSpeed=0;
 	YSpeed=0;
-	this.tip=ontoCircle(tip,handle,length);
 	line=new Line2D.Double(tip, handle);
 }
-//sets the location of target for balde movement using algorithm based upon blade length 
+//sets the location of target for blade movement using algorithm based upon blade length 
 
 public void setTarget(Point.Double mouse){
 	Point.Double m=new Point.Double(mouse.getX(),mouse.getY());
 	double dis=Math.sqrt((tip.x-mouse.x)*(tip.x-mouse.x)+(tip.y-mouse.y)*(tip.y-mouse.y));
-	if(dis<length){
+	if(dis==length){
 		target=new Point.Double(m.getX(),m.getY());
 	}else{
 		target=ontoCircle(m, handle, length);
@@ -52,7 +59,7 @@ public void setTarget(Point.Double mouse){
  * converts point to closest point on circle
  * 
  */
-private Point.Double ontoCircle(Point.Double p,Point.Double c,int r){
+private Point.Double ontoCircle(Point.Double p,Point.Double c,double r){
 	double vX=p.x-c.x;
 	double vY=p.y-c.y;
 	double magV=Math.sqrt(vX*vX+vY*vY);
@@ -81,7 +88,7 @@ public void bladeMove(Point.Double mouse){
 }
 public Boolean colisionBlade(Blade b1,Blade b2){
 	if(b1.getTip().getX()==b2.getTip().getX()&&b1.getTip().getY()==b2.getTip().getY()){
-		if(b1.getBlock()==0&&b2.getBlock()==0){
+		if(b1.getBlockCD()==0&&b2.getBlockCD()==0){
 		b1.setBlockCD(b1.getBlock());
 		b2.setBlockCD(b2.getBlock());
 		b1.setControl(false);
@@ -197,7 +204,7 @@ public boolean isControl() {
 public Line2D.Double getLine() {
 	return line;
 }
-public int getLength() {
+public double getLength() {
 	return length;
 }
 public int getBlock() {
@@ -218,15 +225,31 @@ public void setLungeCD(int lungeCD) {
 private void setControl(boolean control) {
 	this.control = control;
 }
+public String getName(){
+	return Name;
+}
+public void setName(String Name){
+	this.Name=Name;
+}
+void printVariables(){
+	System.out.println(Name+" length:"+length);
+	System.out.println(Name+" speed:"+Speed);
+	System.out.println(Name+" Xspeed:"+XSpeed);
+	System.out.println(Name+" Yspeed:"+YSpeed);
+	System.out.println(Name+" handle:"+handle.x+" "+handle.y);
+	System.out.println(Name+" tip:"+tip.x+" "+tip.y);
+	System.out.println(Name+" Block:"+block);
+	System.out.println(Name+" lunge:"+lunge);
+}
 void printVariables(String name){
-	System.out.println(name+"length:"+length);
-	System.out.println(name+"speed:"+Speed);
-	System.out.println(name+"Xspeed:"+XSpeed);
-	System.out.println(name+"Yspeed:"+YSpeed);
-	System.out.println(name+"handle:"+handle.x+" "+handle.y);
-	System.out.println(name+"tip"+tip.x+" "+tip.y);
-	System.out.println(name+"Block:"+block);
-	System.out.println(name+"lunge:"+lunge);
+	System.out.println(name+" length:"+length);
+	System.out.println(name+" speed:"+Speed);
+	System.out.println(name+" Xspeed:"+XSpeed);
+	System.out.println(name+" Yspeed:"+YSpeed);
+	System.out.println(name+" handle:"+handle.x+" "+handle.y);
+	System.out.println(name+" tip:"+tip.x+" "+tip.y);
+	System.out.println(name+" Block:"+block);
+	System.out.println(name+" lunge:"+lunge);
 }
 
 }
