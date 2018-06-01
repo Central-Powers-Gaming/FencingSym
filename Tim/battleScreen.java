@@ -3,15 +3,49 @@ package Tim;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 class batl extends JComponent{
 	static final int Tw=Toolkit.getDefaultToolkit().getScreenSize().width;
 	static final int Th=Toolkit.getDefaultToolkit().getScreenSize().height;
+	private int x=400;
+
+	public class KeyboardExample extends JPanel {
+		public KeyboardExample() {
+			KeyListener listener = new MyKeyListener();
+			addKeyListener(listener);
+			setFocusable(true);
+		}
+		public class MyKeyListener implements KeyListener {
+			@Override
+			public void keyTyped(KeyEvent e) {
+			}
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode()==KeyEvent.VK_RIGHT){
+					x+=5;
+				}
+				
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				System.out.println("keyReleased="+KeyEvent.getKeyText(e.getKeyCode()));
+			}
+		}
+	}
+	
 	public batl(){
 		repaint();
+		
 	}
 	public void paint(Graphics g){
+		KeyboardExample w=new KeyboardExample();
 		g.setColor(Color.BLACK);
 		g.fillRect(0,0,Tw,Th);
 		int a=cal();
@@ -35,7 +69,7 @@ class batl extends JComponent{
 			if(i<5){
 				g.drawImage(Star,(int)(Tw-(Tw*(double).9))+(100*i), (int)(Th-(Th*(double).95))-(int)(Th-(Th*(double).95))-Th/100, 100, 100, null);
 			}else{
-				g.drawImage(Star,(int)(Tw-(Tw*(double).9))+(100*i)+(100*Tw/354), (int)(Th-(Th*(double).95))-(int)(Th-(Th*(double).95))-Th/100, 100, 100, null);
+				g.drawImage(Star,(int)(Tw-(Tw*(double).9))+(100*i)+100, (int)(Th-(Th*(double).95))-(int)(Th-(Th*(double).95))-Th/100, 100, 100, null);
 			}
 		}
 		//points
@@ -43,7 +77,7 @@ class batl extends JComponent{
 			g.drawImage(StarFill,(int)(Tw-(Tw*(double).9))+(500)-(100*i), (int)(Th-(Th*(double).95))-(int)(Th-(Th*(double).95))-Th/100, 100, 100, null);
 		}
 		for(int i=/*ai.getScore()*/4+5;i>5;i--){
-			g.drawImage(StarFill,(int)(Tw-(Tw*(double).9))+(100*i)+(100*Tw/354)-100, (int)(Th-(Th*(double).95))-(int)(Th-(Th*(double).95))-Th/100, 100, 100, null);
+			g.drawImage(StarFill,(int)(Tw-(Tw*(double).9))+(100*i), (int)(Th-(Th*(double).95))-(int)(Th-(Th*(double).95))-Th/100, 100, 100, null);
 		}
 		g.setColor(Color.WHITE);
 		g.setFont(new Font("Courier New", 0, 70));
@@ -53,7 +87,7 @@ class batl extends JComponent{
 		//~~~~~~~~~~~~~~~~~~~~~~~~Fencer Rendering~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		//g.drawImage(FncP[0]/*player.getFrame()*/0],/*player.x()*/400,/*player.Y*/480,100,100, null);
 		//g.drawImage(FncA[0]/*ai.getFrame()*/0],/*ai.x()*/800,/*ai.Y*/480,100,100, null);
-		g.fillRect(400, 470, 100, 100);
+		g.fillRect(x, 470, 100, 100);
 		g.fillRect(800, 470, 100, 100);
 	}
 	//to maintain an 16:9 aspect ratio on all screens
@@ -66,10 +100,10 @@ class batl extends JComponent{
 		return a;
 	}
 }
-public class battleScreen {
+public class battleScreen {	
 	static final int Tw=Toolkit.getDefaultToolkit().getScreenSize().width;
 	static final int Th=Toolkit.getDefaultToolkit().getScreenSize().height;
-	public static void main(String[] args) {
+	public static void toBattle(){
 		JFrame battle=new JFrame();
 		JPanel pane=(JPanel)battle.getContentPane();
 		pane.add(new batl());
@@ -79,5 +113,7 @@ public class battleScreen {
 		battle.setVisible(true);
 		FileIo a=new FileIo();
 		a.music("7.wav");//"Future Gladiator.wav"    "Neo Western.wav"  "7.wav"
-	}//end main
+		
+	}
+
 }
