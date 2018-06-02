@@ -9,58 +9,51 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
-class batl extends JComponent{
+class batl extends JPanel implements KeyListener{
 	static final int Tw=Toolkit.getDefaultToolkit().getScreenSize().width;
 	static final int Th=Toolkit.getDefaultToolkit().getScreenSize().height;
 	private int x=400;
-
-	public class KeyboardExample extends JPanel {
-		public KeyboardExample() {
-			KeyListener listener = new MyKeyListener();
-			addKeyListener(listener);
-			setFocusable(true);
-		}
-		public class MyKeyListener implements KeyListener {
-			@Override
-			public void keyTyped(KeyEvent e) {
-			}
-
-			@Override
-			public void keyPressed(KeyEvent e) {
-				if(e.getKeyCode()==KeyEvent.VK_RIGHT){
-					x+=5;
-				}
-				
-			}
-
-			@Override
-			public void keyReleased(KeyEvent e) {
-				System.out.println("keyReleased="+KeyEvent.getKeyText(e.getKeyCode()));
-			}
-		}
-	}
-	
 	public batl(){
 		repaint();
-		
+		setFocusable( true );
+		this.addKeyListener(this);	
 	}
-	public void paint(Graphics g){
-		KeyboardExample w=new KeyboardExample();
+	
+	
+	public void keyPressed (KeyEvent event) {
+		System.out.println("Hi Key");
+	    if (event.getKeyCode() == KeyEvent.VK_RIGHT) {
+	    	/*player.x+=player.getSpeed();*/
+	    	x+=2;
+	    }
+	    if (event.getKeyCode() == KeyEvent.VK_LEFT) {
+	    	/*player.x-=player.getSpeed();*/
+	    	x-=2;
+	    }
+	}
+	public void keyReleased(KeyEvent e){}
+	public void keyTyped(KeyEvent e){}
+	
+	public void paint(Graphics g){ 
+		System.out.println("Hi");
 		g.setColor(Color.BLACK);
 		g.fillRect(0,0,Tw,Th);
 		int a=cal();
 		BufferedImage back=null;
 		BufferedImage Star=null;
 		BufferedImage StarFill=null;
+		BufferedImage cross=null;
 		BufferedImage[] FncP=null;
 		BufferedImage[] FncA=null;
 		try{//pics in
 			back = ImageIO.read(new File("backOlimp.png"));//backOlimp.png   backFire.png   endor.png
 			Star = ImageIO.read(new File("Star.png"));
 			StarFill = ImageIO.read(new File("StarFill.png"));
+			cross=ImageIO.read(new File("target.png"));
 			//FncP[0] = ImageIO.read(new File("Star.png"));
 			//FncA[0] = ImageIO.read(new File("Star.png"));
 		} catch(Exception e){e.printStackTrace();}
+		
 		g.drawImage(back, 0,(Th-a)/2, Tw, a, null);
 		g.setColor(Color.BLUE);
 		//Score board
@@ -69,26 +62,28 @@ class batl extends JComponent{
 			if(i<5){
 				g.drawImage(Star,(int)(Tw-(Tw*(double).9))+(100*i), (int)(Th-(Th*(double).95))-(int)(Th-(Th*(double).95))-Th/100, 100, 100, null);
 			}else{
-				g.drawImage(Star,(int)(Tw-(Tw*(double).9))+(100*i)+100, (int)(Th-(Th*(double).95))-(int)(Th-(Th*(double).95))-Th/100, 100, 100, null);
+				g.drawImage(Star,(int)(Tw-(Tw*(double).9))+Tw-(int)(2*(Tw-(Tw*(double).9)))-500+(100*(i-5)), (int)(Th-(Th*(double).95))-(int)(Th-(Th*(double).95))-Th/100, 100, 100, null);
 			}
 		}
 		//points
-		for(int i=/*player.getScore()*/1;i>0;i--){
+		for(int i=/*player.getScore()*/5;i>0;i--){
 			g.drawImage(StarFill,(int)(Tw-(Tw*(double).9))+(500)-(100*i), (int)(Th-(Th*(double).95))-(int)(Th-(Th*(double).95))-Th/100, 100, 100, null);
 		}
 		for(int i=/*ai.getScore()*/4+5;i>5;i--){
-			g.drawImage(StarFill,(int)(Tw-(Tw*(double).9))+(100*i), (int)(Th-(Th*(double).95))-(int)(Th-(Th*(double).95))-Th/100, 100, 100, null);
+			g.drawImage(StarFill,(int)(Tw-(Tw*(double).9))+Tw-(int)(2*(Tw-(Tw*(double).9)))-500+(100*(i-5))-100, (int)(Th-(Th*(double).95))-(int)(Th-(Th*(double).95))-Th/100, 100, 100, null);
 		}
 		g.setColor(Color.WHITE);
 		g.setFont(new Font("Courier New", 0, 70));
 		g.drawString(/*player.getName()*/"Player42",(int)(Tw-(Tw*(double).9)) , (int)(Th-(Th*(double).95)+Th/20+70));
 		int l=/*ai.getName().length*/6;
 		g.drawString(/*ai.getName()*/"Skynet",(int)(Tw-(Tw*(double).9))+Tw-(int)(2*(Tw-(Tw*(double).9)))-41*l, (int)(Th-(Th*(double).95)+Th/20+70));
+		g.drawImage(cross,(int)Math.round(MouseInfo.getPointerInfo().getLocation().getX())-25,(int)Math.round(MouseInfo.getPointerInfo().getLocation().getY())-25,50,50, null);
 		//~~~~~~~~~~~~~~~~~~~~~~~~Fencer Rendering~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		//g.drawImage(FncP[0]/*player.getFrame()*/0],/*player.x()*/400,/*player.Y*/480,100,100, null);
 		//g.drawImage(FncA[0]/*ai.getFrame()*/0],/*ai.x()*/800,/*ai.Y*/480,100,100, null);
 		g.fillRect(x, 470, 100, 100);
 		g.fillRect(800, 470, 100, 100);
+		repaint();
 	}
 	//to maintain an 16:9 aspect ratio on all screens
 	private int cal(){
@@ -99,21 +94,17 @@ class batl extends JComponent{
 		a=(int)(Math.round(900/ratioW));
 		return a;
 	}
-}
-public class battleScreen {	
-	static final int Tw=Toolkit.getDefaultToolkit().getScreenSize().width;
-	static final int Th=Toolkit.getDefaultToolkit().getScreenSize().height;
+}//end class
+public class battleScreen {		
 	public static void toBattle(){
 		JFrame battle=new JFrame();
 		JPanel pane=(JPanel)battle.getContentPane();
 		pane.add(new batl());
-		battle.setSize(Tw,Th);
+		battle.setSize(batl.Tw,batl.Th);
 		battle.setExtendedState(JFrame.MAXIMIZED_BOTH); 
 		battle.setUndecorated(true);
 		battle.setVisible(true);
 		FileIo a=new FileIo();
-		a.music("7.wav");//"Future Gladiator.wav"    "Neo Western.wav"  "7.wav"
-		
+		//a.music("7.wav");//"Future Gladiator.wav"    "Neo Western.wav"  "7.wav"		
 	}
-
-}
+}//end class
