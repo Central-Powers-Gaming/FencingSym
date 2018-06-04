@@ -8,16 +8,16 @@ public class Fencer extends Rectangle.Double{
 	/*ADD DEFAULT VALUES JUST IN CASE
 	 * 
 	 */
-public BufferedImage sprite;
+
 private int Speed;
 public String Name;
 private Blade Sword;
 private int jump=0;
 private double ground;
-public Fencer(String Name,int Speed,BufferedImage sprite,double x,double y,int height,int width,String NameB,int speedB, Point.Double handle,Point.Double tip, int block, int lunge, BufferedImage blade){
+public Fencer(String Name,int Speed,double x,double y,int height,int width,String NameB,int speedB, Point.Double handle,Point.Double tip, int block, int lunge, BufferedImage blade){
 	this.Name=Name;
 	this.Speed=Speed;
-	this.sprite=sprite;
+	
 	this.x=x;
 	this.y=y;
 	ground=y;
@@ -62,6 +62,18 @@ private void jumpContinue(){
 		}
 	}
 }
+/*lunge
+ * 6/4/18
+ * casues fencer to lunge towords enemy and checks if blocked 
+ */
+public void lunge(Fencer enemy){
+	if(Sword.lungeCD==0){
+		if(!Sword.colisionBlade(Sword, enemy.getSword())){
+			Sword.tip=new Point.Double(width+x+Sword.getLength(),height/2);
+			Sword.handle=new Point.Double(x+width,height/2);
+		}Sword.lungeCD=Sword.getLunge();
+	}
+}
 //FencerControl
 //6/4/18
 //returns 1=win,-1=block,0=nothing
@@ -98,9 +110,6 @@ public Blade getSword() {
 }
 public void setSword(Blade sword) {
 	Sword = sword;
-}
-public BufferedImage getSprite() {
-	return sprite;
 }
 public void setGround(double g){
 	ground=g;
