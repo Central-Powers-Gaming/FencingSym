@@ -12,12 +12,15 @@ public BufferedImage sprite;
 private int Speed;
 public String Name;
 private Blade Sword;
+private int jump=0;
+private double ground;
 public Fencer(String Name,int Speed,BufferedImage sprite,double x,double y,int height,int width,String NameB,int speedB, Point.Double handle,Point.Double tip, int block, int lunge, BufferedImage blade){
 	this.Name=Name;
 	this.Speed=Speed;
 	this.sprite=sprite;
 	this.x=x;
 	this.y=y;
+	ground=y;
 	this.height=height;
 	this.width=width;
 	this.Sword=new Blade(NameB,speedB, handle, tip, block, lunge, blade);
@@ -34,5 +37,72 @@ public void move(boolean forwards){
 		x-=Speed;
 	}
 }
-
+/* jump code
+ * 6/4/18
+ * changes y coordinate to allow character to jump
+ */
+public void jump(){
+	if(jump==0){
+	y+=Speed/3;
+	jump=1;
+	}
+}
+private void jumpContinue(){
+	if(jump!=0)
+	if(jump==2){
+		if(y==ground){
+			jump=0;
+		}else{
+			y-=Speed/3;
+		}
+	}
+	else if(jump==1){
+		if(y==ground+Speed){
+			jump=2;
+		}
+	}
+}
+//FencerControl
+//6/4/18
+//returns 1=win,-1=block,0=nothing
+public int FencerControl(double x,double y,Fencer enemy){
+	int rtrn=0;
+	jumpContinue();
+	boolean answer=moveBlade(x,y,enemy);
+	if(answer){
+		rtrn=1;
+	}
+	if(Sword.colisionBlade(Sword, enemy.getSword())){
+		rtrn=-1;
+	}return rtrn;
+}
+public boolean moveBlade(double x,double y,Fencer enemy){
+	Sword.bladeMove(x,y);
+	return enemy.hit(Sword.tip);
+}
+//getters and setters
+public int getSpeed() {
+	return Speed;
+}
+public void setSpeed(int speed) {
+	Speed = speed;
+}
+public String getName() {
+	return Name;
+}
+public void setName(String name) {
+	Name = name;
+}
+public Blade getSword() {
+	return Sword;
+}
+public void setSword(Blade sword) {
+	Sword = sword;
+}
+public BufferedImage getSprite() {
+	return sprite;
+}
+public void setGround(double g){
+	ground=g;
+}
 }

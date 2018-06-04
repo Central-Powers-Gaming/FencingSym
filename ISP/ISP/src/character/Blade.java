@@ -68,7 +68,7 @@ private Point.Double ontoCircle(Point.Double p,Point.Double c,double r){
 	Point.Double to=new Point.Double((int)aX,(int)aY);
 	return to;
 }
-public void bladeMove(int x,int y){
+public void bladeMove(double x,double y){
 Point.Double xy=new Point.Double(x,y);
 this.bladeMove(xy);
 }
