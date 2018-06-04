@@ -2,6 +2,9 @@
 package Tim;
 import javax.imageio.ImageIO;
 import javax.swing.*;
+
+import character.Fencer;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,26 +12,24 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 class batl extends JPanel implements KeyListener{
 	static final int Tw=Toolkit.getDefaultToolkit().getScreenSize().width;
 	static final int Th=Toolkit.getDefaultToolkit().getScreenSize().height;
-	private int x=400;
+	static Fencer[] grand;
 	public batl(){
 		repaint();
 		setFocusable( true );
 		this.addKeyListener(this);	
-	}
-	
-	
+		grand=itz();
+	}	
 	public void keyPressed (KeyEvent event) {
 		System.out.println("Hi Key");
-	    if (event.getKeyCode() == KeyEvent.VK_RIGHT) {
-	    	/*player.x+=player.getSpeed();*/
-	    	x+=2;
+	    if (event.getKeyCode() == KeyEvent.VK_D) {
+	    	grand[0].x+=grand[0].getSpeed();
 	    }
-	    if (event.getKeyCode() == KeyEvent.VK_LEFT) {
-	    	/*player.x-=player.getSpeed();*/
-	    	x-=2;
+	    if (event.getKeyCode() == KeyEvent.VK_A) {
+	    	grand[0].x-=grand[0].getSpeed();
 	    }
 	}
 	public void keyReleased(KeyEvent e){}
@@ -43,21 +44,23 @@ class batl extends JPanel implements KeyListener{
 		BufferedImage Star=null;
 		BufferedImage StarFill=null;
 		BufferedImage cross=null;
-		BufferedImage[] FncP=null;
-		BufferedImage[] FncA=null;
 		try{//pics in
 			back = ImageIO.read(new File("backOlimp.png"));//backOlimp.png   backFire.png   endor.png
 			Star = ImageIO.read(new File("Star.png"));
 			StarFill = ImageIO.read(new File("StarFill.png"));
 			cross=ImageIO.read(new File("target.png"));
-			//FncP[0] = ImageIO.read(new File("Star.png"));
-			//FncA[0] = ImageIO.read(new File("Star.png"));
 		} catch(Exception e){e.printStackTrace();}
 		
 		g.drawImage(back, 0,(Th-a)/2, Tw, a, null);
 		g.setColor(Color.BLUE);
 		//Score board
 		g.fillRect((int)(Tw-(Tw*(double).9)), (int)(Th-(Th*(double).95)), Tw-(int)(2*(Tw-(Tw*(double).9))), Th/20);
+		//player timers
+		g.fillRect((int)(Tw-(Tw*(double).9)), (int)(Th-(Th*(double).1)), (Tw-(int)(2*(Tw-(Tw*(double).9))))/10, Th/20);
+		g.fillRect((int)(Tw-(Tw*(double).9))+200, (int)(Th-(Th*(double).1)), (Tw-(int)(2*(Tw-(Tw*(double).9))))/10, Th/20);
+		//ai timers
+		g.fillRect((int)(Tw-(Tw-(Tw*(double).9))), (int)(Th-(Th*(double).1)), (Tw-(int)(2*(Tw-(Tw*(double).9))))/10, Th/20);
+		g.fillRect((int)(Tw-(Tw-(Tw*(double).9))-200), (int)(Th-(Th*(double).1)), (Tw-(int)(2*(Tw-(Tw*(double).9))))/10, Th/20);
 		for(int i=0;i<10;i++){
 			if(i<5){
 				g.drawImage(Star,(int)(Tw-(Tw*(double).9))+(100*i), (int)(Th-(Th*(double).95))-(int)(Th-(Th*(double).95))-Th/100, 100, 100, null);
@@ -77,12 +80,13 @@ class batl extends JPanel implements KeyListener{
 		g.drawString(/*player.getName()*/"Player42",(int)(Tw-(Tw*(double).9)) , (int)(Th-(Th*(double).95)+Th/20+70));
 		int l=/*ai.getName().length*/6;
 		g.drawString(/*ai.getName()*/"Skynet",(int)(Tw-(Tw*(double).9))+Tw-(int)(2*(Tw-(Tw*(double).9)))-41*l, (int)(Th-(Th*(double).95)+Th/20+70));
-		g.drawImage(cross,(int)Math.round(MouseInfo.getPointerInfo().getLocation().getX())-25,(int)Math.round(MouseInfo.getPointerInfo().getLocation().getY())-25,50,50, null);
+		
 		//~~~~~~~~~~~~~~~~~~~~~~~~Fencer Rendering~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-		//g.drawImage(FncP[0]/*player.getFrame()*/0],/*player.x()*/400,/*player.Y*/480,100,100, null);
+		g.drawImage(grand[0].getPic(0),(int)grand[0].x,(int)grand[0].y,150,155, null);
 		//g.drawImage(FncA[0]/*ai.getFrame()*/0],/*ai.x()*/800,/*ai.Y*/480,100,100, null);
-		g.fillRect(x, 470, 100, 100);
-		g.fillRect(800, 470, 100, 100);
+		//g.fillRect(x, 470, 100, 100);
+		g.drawImage(grand[1].getPic(0),(int)grand[1].x,(int)grand[1].y,150,155, null);
+		g.drawImage(cross,(int)Math.round(MouseInfo.getPointerInfo().getLocation().getX())-25,(int)Math.round(MouseInfo.getPointerInfo().getLocation().getY())-25,50,50, null);
 		repaint();
 	}
 	//to maintain an 16:9 aspect ratio on all screens
@@ -91,8 +95,30 @@ class batl extends JPanel implements KeyListener{
 		double ratioW;
 		ratioW=((double)1600/(double)Tw);
 		System.out.println(ratioW);
+		System.out.println(Th);
 		a=(int)(Math.round(900/ratioW));
 		return a;
+	}
+	private static Fencer[] itz(){
+		BufferedImage[] FncP=new BufferedImage[5] ;
+		for(int i=0;i<5;i++){
+			try {
+				FncP[i] = ImageIO.read(new File("f"+(i+1)+".png"));
+			}catch (IOException e) {e.printStackTrace();}
+		}
+		Fencer player=new Fencer(FncP,"Player",2,Tw/3,Th*(0.60185185),155,150,"A",3,new java.awt.geom.Point2D.Double(Tw/3/2,410+150) , new java.awt.geom.Point2D.Double(Tw/3/2+100,410+150), 5, 10,null);
+		//ai
+		BufferedImage[] FncA=new BufferedImage[5] ;
+		for(int i=0;i<5;i++){
+			try {
+				FncA[i] = ImageIO.read(new File("a"+(i+1)+".png"));
+			}catch (IOException e) {e.printStackTrace();}
+		}
+		Fencer ai=new Fencer(FncA,"AI",2,Tw*2/3,Th*(0.60185185),155,150,"A",3,new java.awt.geom.Point2D.Double(Tw/3,410+150) , new java.awt.geom.Point2D.Double(Tw/3+100,410+150), 5, 10,null);
+		Fencer[] m=new Fencer[2];
+		m[0]=player;
+		m[1]=ai;
+		return m;
 	}
 }//end class
 public class battleScreen {		
@@ -104,7 +130,6 @@ public class battleScreen {
 		battle.setExtendedState(JFrame.MAXIMIZED_BOTH); 
 		battle.setUndecorated(true);
 		battle.setVisible(true);
-		FileIo a=new FileIo();
-		//a.music("7.wav");//"Future Gladiator.wav"    "Neo Western.wav"  "7.wav"		
+	
 	}
 }//end class

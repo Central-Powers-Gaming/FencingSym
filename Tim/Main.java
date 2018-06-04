@@ -166,6 +166,7 @@ public class Main {
 	private static void play(){
 		toBattle();
 		main.setVisible(false);
+		
 	}//end main
 	public static void toBattle(){
 		JFrame battle=new JFrame();
@@ -179,6 +180,8 @@ public class Main {
 		//a.music("7.wav");//"Future Gladiator.wav"    "Neo Western.wav"  "7.wav"
 	}	
 	public static void main(String[] args) {
+		FileIo a=new FileIo();
+		a.music("7.wav");//"Future Gladiator.wav"    "Neo Western.wav"  "7.wav"	
 		start();
 	}
 }
