@@ -38,7 +38,7 @@ public class FileManager {
 	private static JButton btnLS6  = new JButton();
 	private static JButton btnLS7  = new JButton();
 	private static JButton btnLS8  = new JButton();
-	private static final String[] files={"FencingSym_1","FencingSym_2","FencingSym_3","FencingSym_4","FencingSym_5","FencingSym_6","FencingSym_7","FencingSym_8"};
+	private static final String[] files={"FencingSym_1.txt","FencingSym_2.txt","FencingSym_3.txt","FencingSym_4.txt","FencingSym_5.txt","FencingSym_6.txt","FencingSym_7.txt","FencingSym_8.txt"};
 	public static JFrame main=new JFrame("Fencing Simulator 2K18");//container for the menu
 	private static JLabel back=new JLabel();//will be used for backround
 	private static JLabel lblText=new JLabel();//will be used for backround
