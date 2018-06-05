@@ -4,6 +4,8 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
+import AI.AI;
+
 public class Fencer extends Rectangle.Double{
 	/*ADD DEFAULT VALUES JUST IN CASE
 	 * 
@@ -11,10 +13,10 @@ public class Fencer extends Rectangle.Double{
 
 private int Speed;
 public String Name;
-private Blade Sword;
+protected Blade Sword;
 private int jump=0;
 private double ground;
-public Fencer(String Name,int Speed,double x,double y,int height,int width,String NameB,int speedB, Point.Double handle,Point.Double tip, int block, int lunge, BufferedImage blade){
+public Fencer(String Name,int Speed,double x,double y,int height,int width,String NameB,int speedB, Point.Double handle,Point.Double tip, int block, int lunge){
 	this.Name=Name;
 	this.Speed=Speed;
 	
@@ -23,7 +25,7 @@ public Fencer(String Name,int Speed,double x,double y,int height,int width,Strin
 	ground=y;
 	this.height=height;
 	this.width=width;
-	this.Sword=new Blade(NameB,speedB, handle, tip, block, lunge, blade);
+	this.Sword=new Blade(NameB,speedB, handle, tip, block, lunge);
 }
 public boolean hit(Point.Double p){
 	if(this.contains(p)){
@@ -77,7 +79,7 @@ public void lunge(Fencer enemy){
 //FencerControl
 //6/4/18
 //returns 1=win,-1=block,0=nothing
-public int FencerControl(double x,double y,Fencer enemy){
+public int FencerControl(double x,double y,AI enemy){
 	int rtrn=0;
 	jumpContinue();
 	boolean answer=moveBlade(x,y,enemy);

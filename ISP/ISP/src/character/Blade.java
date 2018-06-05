@@ -23,21 +23,24 @@ public int block;
 public int blockCD;
 public int lungeCD;
 public int lunge;
-public BufferedImage pic;
+
 private Point.Double target;
 public String Name;
 //constructor
-public Blade(String Name,int speed, Point.Double handle,Point.Double tip, int block, int lunge, BufferedImage pic) {
+public Blade(String Name,int speed, Point.Double handle,Point.Double tip, int block, int lunge) {
 	super();
 	this.Name=Name;
 	control=true;
+	length= Math.hypot(tip.x-handle.x, tip.y-handle.y);
+	if(length<0){
+		length*=-1;
+	}
 	this.tip=ontoCircle(tip,handle,length);
 	this.length =Math.sqrt((this.tip.x-handle.x)*(this.tip.x-handle.x)+(this.tip.y-handle.y)*(this.tip.y-handle.y));
 	Speed = speed;
 	this.handle = handle;
 	this.block = block;
 	this.lunge = lunge;
-	this.pic = pic;
 	XSpeed=0;
 	YSpeed=0;
 	line=new Line2D.Double(tip, handle);
@@ -188,12 +191,7 @@ public int getLunge() {
 public void setLunge(int lunge) {
 	this.lunge = lunge;
 }
-public BufferedImage getPic() {
-	return pic;
-}
-public void setPic(BufferedImage pic) {
-	this.pic = pic;
-}
+
 public Point.Double getTarget() {
 	return target;
 }
