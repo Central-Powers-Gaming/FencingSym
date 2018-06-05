@@ -1,31 +1,43 @@
 package character;
-
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
-
 import AI.AI;
-
 public class Fencer extends Rectangle.Double{
 	/*ADD DEFAULT VALUES JUST IN CASE
 	 * 
 	 */
-
 private int Speed;
 public String Name;
-protected Blade Sword;
+public int frame;
+private Blade Sword;
 private int jump=0;
+private int score=0;
 private double ground;
-public Fencer(String Name,int Speed,double x,double y,int height,int width,String NameB,int speedB, Point.Double handle,Point.Double tip, int block, int lunge){
+/**
+ * @return the score
+ */
+public int getScore() {
+	return score;
+}
+/**
+ * @param score the score to set
+ */
+public void setScore(int score) {
+	this.score = score;
+}
+
+private BufferedImage[] FncP=new BufferedImage[5] ;
+public Fencer(BufferedImage[] FncP,String Name,int Speed,double x,double y,int height,int width,String NameB,int speedB, Point.Double handle,Point.Double tip, int block, int lunge, BufferedImage blade){
 	this.Name=Name;
 	this.Speed=Speed;
-	
 	this.x=x;
 	this.y=y;
 	ground=y;
 	this.height=height;
 	this.width=width;
-	this.Sword=new Blade(NameB,speedB, handle, tip, block, lunge);
+	this.Sword=new Blade(NameB,speedB, handle, tip, block, lunge, blade);
+	this.FncP= FncP;
 }
 public boolean hit(Point.Double p){
 	if(this.contains(p)){
@@ -79,7 +91,7 @@ public void lunge(Fencer enemy){
 //FencerControl
 //6/4/18
 //returns 1=win,-1=block,0=nothing
-public int FencerControl(double x,double y,AI enemy){
+public int FencerControl(double x,double y,Fencer enemy){
 	int rtrn=0;
 	jumpContinue();
 	boolean answer=moveBlade(x,y,enemy);
@@ -98,6 +110,9 @@ public boolean moveBlade(double x,double y,Fencer enemy){
 public int getSpeed() {
 	return Speed;
 }
+public BufferedImage getPic(int i) {
+	return FncP[i];
+}
 public void setSpeed(int speed) {
 	Speed = speed;
 }
@@ -113,6 +128,7 @@ public Blade getSword() {
 public void setSword(Blade sword) {
 	Sword = sword;
 }
+
 public void setGround(double g){
 	ground=g;
 }
