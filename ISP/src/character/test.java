@@ -10,17 +10,23 @@ public class test {
 		Point.Double t1=new Point.Double(50,100);
 		Point.Double h2=new Point.Double(45,45);
 		Point.Double t2=new Point.Double(55,95);
-		Blade b1=new Blade("",10, h1,t1, 10, 10, null);
-		Blade b2=new Blade("",10, h2,t2, 10, 10, null);
-		b1.bladeMove(100,50);
-		b1.printVariables("b1");
-		b1.setTip(b2.getTip());
-		b1.colisionBlade(b1,b2);
-		b1.bladeMove(100,50);
-		b2.bladeMove(100,50);
-		b1.printVariables("b1");
-		b2.printVariables("b2");
-
+		Blade b1=new Blade("",10,50, h1,t1, 10, 10);
+		Blade b2=new Blade("",10,50, h2,t2, 10, 10);
+		System.out.println(b1.getLength());
+		System.out.println(b1.checkLength());
+		b1.bladeMove(100, 100);
+		System.out.println(b1.checkLength());
+		System.out.println(b1.getLength());
+		b1.bladeMove(100, 100);
+		System.out.println(b1.checkLength());
+		System.out.println(b1.getLength());
+		b1.bladeMove(100, 100);
+		System.out.println(b1.checkLength());
+		System.out.println(b1.getLength());
+		b1.bladeMove(000, 00);
+		System.out.println(b1.checkLength());
+		System.out.println(b1.getLength());
+		b1.bladeMove(7, 28);
 	}
 
 }

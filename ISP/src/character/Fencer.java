@@ -10,7 +10,7 @@ public class Fencer extends Rectangle.Double{
 private int Speed;
 public String Name;
 public int frame;
-private Blade Sword;
+protected Blade Sword;
 private int jump=0;
 private int score=0;
 private double ground;
@@ -28,7 +28,7 @@ public void setScore(int score) {
 }
 
 private BufferedImage[] FncP=new BufferedImage[5] ;
-public Fencer(BufferedImage[] FncP,String Name,int Speed,double x,double y,int height,int width,String NameB,int speedB, Point.Double handle,Point.Double tip, int block, int lunge){
+public Fencer(BufferedImage[] FncP,String Name,int Speed,double x,double y,int height,int width,String NameB,int speedB,double length, Point.Double handle,Point.Double tip, int block, int lunge){
 	this.Name=Name;
 	this.Speed=Speed;
 	this.x=x;
@@ -36,7 +36,7 @@ public Fencer(BufferedImage[] FncP,String Name,int Speed,double x,double y,int h
 	ground=y;
 	this.height=height;
 	this.width=width;
-	this.Sword=new Blade(NameB,speedB, handle, tip, block, lunge);
+	this.Sword=new Blade(NameB,speedB,length, handle, tip, block, lunge);
 	this.FncP= FncP;
 }
 public boolean hit(Point.Double p){
@@ -81,7 +81,7 @@ private void jumpContinue(){
  * casues fencer to lunge towords enemy and checks if blocked 
  */
 public void lunge(Fencer enemy){
-	if(Sword.lungeCD==0){
+	if(!(Sword.lungeCD>0)){
 		if(!Sword.colisionBlade(Sword, enemy.getSword())){
 			Sword.tip=new Point.Double(width+x+Sword.getLength(),height/2);
 			Sword.handle=new Point.Double(x+width,height/2);

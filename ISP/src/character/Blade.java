@@ -27,18 +27,15 @@ public int lunge;
 private Point.Double target;
 public String Name;
 //constructor
-public Blade(String Name,int speed, Point.Double handle,Point.Double tip, int block, int lunge) {
+public Blade(String Name,int speed,double length, Point.Double handle,Point.Double tip, int block, int lunge) {
 	super();
 	this.Name=Name;
 	control=true;
-	length= Math.hypot(tip.x-handle.x, tip.y-handle.y);
-	if(length<0){
-		length*=-1;
-	}
-	this.tip=ontoCircle(tip,handle,length);
-	this.length =Math.sqrt((this.tip.x-handle.x)*(this.tip.x-handle.x)+(this.tip.y-handle.y)*(this.tip.y-handle.y));
-	Speed = speed;
+	this.length=length;
 	this.handle = handle;
+	this.tip=ontoCircle(tip,handle,length);
+	
+	Speed = speed;
 	this.block = block;
 	this.lunge = lunge;
 	XSpeed=0;
@@ -69,6 +66,7 @@ private Point.Double ontoCircle(Point.Double p,Point.Double c,double r){
 	double aX=c.x+vX/magV*r;
 	double aY=c.y+vY/magV*r;
 	Point.Double to=new Point.Double((int)aX,(int)aY);
+	
 	return to;
 }
 public void bladeMove(double x,double y){
@@ -128,13 +126,19 @@ void move(Point.Double xy){
 			XSpeed=(int) (Speed*multiple);
 			YSpeed=Speed-XSpeed;
 			tip=new Point.Double((int)(tip.getX()+XSpeed),(int)(tip.getY()+YSpeed));
+			while(checkLength()!=length){
+				tip=ontoCircle(tip, handle, length);
+			}
+			
 		}else if(tip.y>xy.y){
 			double Ychange=tip.y-xy.y;
 			double multiple=1.0/(((double)Xchange+(double)Ychange)/(double)Xchange);
 			XSpeed=(int) (Speed*multiple);
 			YSpeed=Speed-XSpeed;
 			tip=new Point.Double((int)(tip.getX()+XSpeed),(int)(tip.getY()-YSpeed));
-			System.out.println();
+			while(checkLength()!=length){
+				tip=ontoCircle(tip, handle, length);
+			}
 		}
 	}else if(tip.x>xy.x){
 		double Xchange=tip.x-xy.x;
@@ -144,12 +148,18 @@ void move(Point.Double xy){
 			XSpeed=(int) (Speed*multiple);
 			YSpeed=Speed-XSpeed;
 			tip=new Point.Double((int)(tip.getX()-XSpeed),(int)(tip.getY()+YSpeed));
+			while(checkLength()!=length){
+				tip=ontoCircle(tip, handle, length);
+			}
 		}else if(tip.y>xy.y){
 			double Ychange=tip.y-xy.y;
 			double multiple=1/(Xchange+Ychange)/Xchange;
 			XSpeed=(int) (Speed*multiple);
 			YSpeed=Speed-XSpeed;
 			tip=new Point.Double((int)(tip.getX()-XSpeed),(int)(tip.getY()-YSpeed));
+			while(checkLength()!=length){
+				tip=ontoCircle(tip, handle, length);
+			}
 		}
 	}
 }
@@ -249,5 +259,10 @@ void printVariables(String name){
 	System.out.println(name+" Block:"+block);
 	System.out.println(name+" lunge:"+lunge);
 }
-
+public double checkLength(){
+	return Math.sqrt((this.tip.x-handle.x)*(this.tip.x-handle.x)+(this.tip.y-handle.y)*(this.tip.y-handle.y));
+}
+private boolean distanceCheck(Point.Double tip){
+	return length==Math.sqrt((tip.x-handle.x)*(tip.x-handle.x)+(tip.y-handle.y)*(tip.y-handle.y));
+}
 }
