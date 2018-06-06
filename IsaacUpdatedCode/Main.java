@@ -98,7 +98,7 @@ public class Main {
 
 	    main.addWindowListener(new WindowAdapter() {
 	      public void windowClosing(WindowEvent e){
-	       System.exit(1);
+	       System.exit(0);
 	      }
 	    });
 	    btnE.addActionListener(new ActionListener() {
