@@ -8,7 +8,7 @@ public class AI extends Fencer{
 		super(fncr,Name, Speed+modifier, x, y, height, width, NameB, speedB+modifier, length, handle, tip, block, lunge+modifier);
 	}
 	private class RANDOM extends Fencer{
-		public RANDOM(int modifier,BufferedImage[] fncr,String difficulty,String Name, int Speed, double x, double y, int height, int width, String NameB,int speedB, Point.Double handle, Point.Double tip, int block, int lunge) {
+		public RANDOM(int modifier,BufferedImage[] fncr,String difficulty,String Name, int Speed,int length, double x, double y, int height, int width, String NameB,int speedB, Point.Double handle, Point.Double tip, int block, int lunge) {
 			super(fncr,Name, Speed+modifier, x, y, height, width, NameB, speedB+modifier,length, handle, tip, block, lunge+modifier);
 		}
 		public void control(){
