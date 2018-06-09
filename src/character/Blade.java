@@ -126,9 +126,7 @@ void move(Point.Double xy){
 			XSpeed=(int) (Speed*multiple);
 			YSpeed=Speed-XSpeed;
 			tip=new Point.Double((int)(tip.getX()+XSpeed),(int)(tip.getY()+YSpeed));
-			while(checkLength()!=length){
-				tip=ontoCircle(tip, handle, length);
-			}
+
 			
 		}else if(tip.y>xy.y){
 			double Ychange=tip.y-xy.y;
@@ -136,9 +134,7 @@ void move(Point.Double xy){
 			XSpeed=(int) (Speed*multiple);
 			YSpeed=Speed-XSpeed;
 			tip=new Point.Double((int)(tip.getX()+XSpeed),(int)(tip.getY()-YSpeed));
-			while(checkLength()!=length){
-				tip=ontoCircle(tip, handle, length);
-			}
+
 		}
 	}else if(tip.x>xy.x){
 		double Xchange=tip.x-xy.x;
@@ -148,18 +144,14 @@ void move(Point.Double xy){
 			XSpeed=(int) (Speed*multiple);
 			YSpeed=Speed-XSpeed;
 			tip=new Point.Double((int)(tip.getX()-XSpeed),(int)(tip.getY()+YSpeed));
-			while(checkLength()!=length){
-				tip=ontoCircle(tip, handle, length);
-			}
+
 		}else if(tip.y>xy.y){
 			double Ychange=tip.y-xy.y;
 			double multiple=1/(Xchange+Ychange)/Xchange;
 			XSpeed=(int) (Speed*multiple);
 			YSpeed=Speed-XSpeed;
 			tip=new Point.Double((int)(tip.getX()-XSpeed),(int)(tip.getY()-YSpeed));
-			while(checkLength()!=length){
-				tip=ontoCircle(tip, handle, length);
-			}
+
 		}
 	}
 }

@@ -164,20 +164,17 @@ public class Main {
 		
 	}
 	private static void play(){
-		toBattle();
-		main.setVisible(false);
-	}//end main
-	public static void toBattle(){
 		JFrame battle=new JFrame();
 		JPanel pane=(JPanel)battle.getContentPane();
-		pane.add(new batl());
+		pane.add(new batl(1));
 		battle.setSize(w,l);
 		battle.setExtendedState(JFrame.MAXIMIZED_BOTH); 
 		battle.setUndecorated(true);
 		battle.setVisible(true);
 		FileIo a=new FileIo();
 		//a.music("7.wav");//"Future Gladiator.wav"    "Neo Western.wav"  "7.wav"
-	}	
+		main.setVisible(false);
+	}//end main
 	public static void main(String[] args) {
 		start();
 	}
