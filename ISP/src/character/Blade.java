@@ -33,6 +33,7 @@ public Blade(String Name,int speed,double length, Point.Double handle,Point.Doub
 	control=true;
 	this.length=length;
 	this.handle = handle;
+
 	this.tip=ontoCircle(tip,handle,length);
 	
 	Speed = speed;
@@ -65,8 +66,10 @@ private Point.Double ontoCircle(Point.Double p,Point.Double c,double r){
 	double magV=Math.sqrt(vX*vX+vY*vY);
 	double aX=c.x+vX/magV*r;
 	double aY=c.y+vY/magV*r;
-	Point.Double to=new Point.Double((int)aX,(int)aY);
-	
+	Point.Double to=new Point.Double(aX,aY);
+	if(!distanceCheck(to)){
+		System.out.println(checkLength(to,c));
+	}
 	return to;
 }
 public void bladeMove(double x,double y){
@@ -125,20 +128,18 @@ void move(Point.Double xy){
 			double multiple=1/(Xchange+Ychange)/Xchange;
 			XSpeed=(int) (Speed*multiple);
 			YSpeed=Speed-XSpeed;
-			tip=new Point.Double((int)(tip.getX()+XSpeed),(int)(tip.getY()+YSpeed));
-			while(checkLength()!=length){
-				tip=ontoCircle(tip, handle, length);
-			}
+			line.x1=tip.getX()+XSpeed;line.y1=tip.getY()+YSpeed;
+			tip=new Point.Double(tip.getX()+XSpeed,tip.getY()+YSpeed);
+			
 			
 		}else if(tip.y>xy.y){
 			double Ychange=tip.y-xy.y;
 			double multiple=1.0/(((double)Xchange+(double)Ychange)/(double)Xchange);
 			XSpeed=(int) (Speed*multiple);
 			YSpeed=Speed-XSpeed;
-			tip=new Point.Double((int)(tip.getX()+XSpeed),(int)(tip.getY()-YSpeed));
-			while(checkLength()!=length){
-				tip=ontoCircle(tip, handle, length);
-			}
+			line.x1=tip.getX()+XSpeed;line.y1=tip.getY()-YSpeed;
+			tip=new Point.Double(tip.getX()+XSpeed,tip.getY()-YSpeed);
+			
 		}
 	}else if(tip.x>xy.x){
 		double Xchange=tip.x-xy.x;
@@ -147,19 +148,17 @@ void move(Point.Double xy){
 			double multiple=1/(Xchange+Ychange)/Xchange;
 			XSpeed=(int) (Speed*multiple);
 			YSpeed=Speed-XSpeed;
-			tip=new Point.Double((int)(tip.getX()-XSpeed),(int)(tip.getY()+YSpeed));
-			while(checkLength()!=length){
-				tip=ontoCircle(tip, handle, length);
-			}
+			line.x1=tip.getX()-XSpeed;line.y1=tip.getY()+YSpeed;
+			tip=new Point.Double(tip.getX()-XSpeed,tip.getY()+YSpeed);
+			
 		}else if(tip.y>xy.y){
 			double Ychange=tip.y-xy.y;
 			double multiple=1/(Xchange+Ychange)/Xchange;
 			XSpeed=(int) (Speed*multiple);
 			YSpeed=Speed-XSpeed;
-			tip=new Point.Double((int)(tip.getX()-XSpeed),(int)(tip.getY()-YSpeed));
-			while(checkLength()!=length){
-				tip=ontoCircle(tip, handle, length);
-			}
+			line.x1=tip.getX()-XSpeed;line.y1=tip.getY()-YSpeed;
+			tip=new Point.Double((tip.getX()-XSpeed),(tip.getY()-YSpeed));
+			
 		}
 	}
 }
@@ -262,7 +261,11 @@ void printVariables(String name){
 public double checkLength(){
 	return Math.sqrt((this.tip.x-handle.x)*(this.tip.x-handle.x)+(this.tip.y-handle.y)*(this.tip.y-handle.y));
 }
+public double checkLength(Point.Double tip,Point.Double handle){
+	return Math.sqrt((tip.x-handle.x)*(tip.x-handle.x)+(tip.y-handle.y)*(tip.y-handle.y));
+}
 private boolean distanceCheck(Point.Double tip){
-	return length==Math.sqrt((tip.x-handle.x)*(tip.x-handle.x)+(tip.y-handle.y)*(tip.y-handle.y));
+	double x=Math.sqrt((tip.x-handle.x)*(tip.x-handle.x)+(tip.y-handle.y)*(tip.y-handle.y));
+	return length==x;
 }
 }
