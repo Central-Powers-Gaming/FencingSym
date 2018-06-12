@@ -1,5 +1,9 @@
 package character;
-
+//Author:bradly
+//Date Created: June. 1, 2018
+//Last modified: June. 14, 2018
+//Fencing Simulator 2018
+//program: Dr. Evil and Batman with Richard Dean Anderson star in: Fencing Symulator 2K18: Stabby Mc Kill Die Too: Electric Boogaloo: The Phantom Menace: Attack of the Clones: Revenge of the Sith: Wrath of Khan Part 2: Dead Man’s Chest: The third one, part 7 of 9 in the trilogy: Prequel to the Quran, by Sun Tzu and Robert Munch With Samuel L Jackson as “God” Based on a true story as told by Tommy Wiseau
 import java.awt.Point;
 import java.awt.geom.Line2D;
 import java.awt.image.BufferedImage;
@@ -13,7 +17,7 @@ public class Blade {
  */
 private boolean control;
 private Line2D.Double line;
-private double length;
+public double length;
 private int Speed;
 private int XSpeed;
 private int YSpeed;
@@ -129,7 +133,7 @@ void move(Point.Double xy){
 			XSpeed=(int) (Speed*multiple);
 			YSpeed=Speed-XSpeed;
 			line.x1=tip.getX()+XSpeed;line.y1=tip.getY()+YSpeed;
-			tip=new Point.Double(tip.getX()+XSpeed,tip.getY()+YSpeed);
+			tip=ontoCircle(new Point.Double(tip.getX()+XSpeed,tip.getY()+YSpeed),handle,length);
 			
 			
 		}else if(tip.y>xy.y){
@@ -138,7 +142,7 @@ void move(Point.Double xy){
 			XSpeed=(int) (Speed*multiple);
 			YSpeed=Speed-XSpeed;
 			line.x1=tip.getX()+XSpeed;line.y1=tip.getY()-YSpeed;
-			tip=new Point.Double(tip.getX()+XSpeed,tip.getY()-YSpeed);
+			tip=ontoCircle(new Point.Double(tip.getX()+XSpeed,tip.getY()-YSpeed),handle,length);
 			
 		}
 	}else if(tip.x>xy.x){
@@ -149,7 +153,7 @@ void move(Point.Double xy){
 			XSpeed=(int) (Speed*multiple);
 			YSpeed=Speed-XSpeed;
 			line.x1=tip.getX()-XSpeed;line.y1=tip.getY()+YSpeed;
-			tip=new Point.Double(tip.getX()-XSpeed,tip.getY()+YSpeed);
+			tip=ontoCircle(new Point.Double(tip.getX()-XSpeed,tip.getY()+YSpeed),handle,length);
 			
 		}else if(tip.y>xy.y){
 			double Ychange=tip.y-xy.y;
@@ -157,7 +161,7 @@ void move(Point.Double xy){
 			XSpeed=(int) (Speed*multiple);
 			YSpeed=Speed-XSpeed;
 			line.x1=tip.getX()-XSpeed;line.y1=tip.getY()-YSpeed;
-			tip=new Point.Double((tip.getX()-XSpeed),(tip.getY()-YSpeed));
+			tip=ontoCircle(new Point.Double(tip.getX()-XSpeed,tip.getY()-YSpeed),handle,length);
 			
 		}
 	}

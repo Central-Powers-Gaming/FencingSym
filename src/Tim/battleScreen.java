@@ -7,7 +7,6 @@ package Tim;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import Ai.*;
-
 import character.Fencer;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -236,8 +235,9 @@ class batl extends JPanel implements KeyListener, MouseListener{
 		g.drawString(ai.getName(),(int)(Tw-(Tw*(double).9))+Tw-(int)(2*(Tw-(Tw*(double).9)))-41*l, (int)(Th-(Th*(double).95)+Th/20+70));
 		//~~~~~~~~~~~~~~~~~~~~~~~~Blade Rendering~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		g.setColor(Color.GRAY);
+		player.getSword().length=100;
+		ai.getSword().length=100;
 		//player
-		
 		player.getSword().setHandle(new Point.Double(player.x+148,player.y+45));
 		player.getSword().bladeMove((int)Math.round(MouseInfo.getPointerInfo().getLocation().getX())-25,(int)Math.round(MouseInfo.getPointerInfo().getLocation().getY())-25);
 		g.drawLine((int)player.getSword().getHandle().x, (int)player.getSword().getHandle().y, (int)player.getSword().getTip().x,(int) player.getSword().getTip().y);
@@ -260,6 +260,7 @@ class batl extends JPanel implements KeyListener, MouseListener{
 		}
 		//~~~~~~~~~~~~~~~~~~~~~~~~Colisions~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		player.getSword().colisionBlade(player.getSword(),ai.getSword());
+		ai.getSword().colisionBlade(ai.getSword(),player.getSword());
 		player.hit(ai.getSword().tip);
 		if(ai.hit(player.getSword().tip)==true||player.hit(ai.getSword().tip)==true){
 			boolean q=whoP(player,ai);
@@ -270,7 +271,8 @@ class batl extends JPanel implements KeyListener, MouseListener{
 			}
 			player=itz(player.getScore());
 			ai=itz2(ai.getScore(),level);
-			
+			toJump=false;
+			AitoJump=false;
 		}
 		//end check
 		if(player.getScore()>=5){
@@ -293,10 +295,8 @@ class batl extends JPanel implements KeyListener, MouseListener{
 			go=true;
 			level++;
 			player=itz(0);
-			ai=itz2(0,level);
-			
-		}
-	
+			ai=itz2(0,level);			
+		}	
 		//fps
 		frames++;
 		if((System.currentTimeMillis()-time)/1000>=1){
@@ -360,7 +360,7 @@ class batl extends JPanel implements KeyListener, MouseListener{
 			}catch (IOException e) {e.printStackTrace();}
 		}
 		//System.out.println("level                "+level);
-			RANDOM ai=new RANDOM(3,FncA,"RANDOM","AI",2,100,Tw*2/3,Th*(0.60185185),155,150,"A",100,new Point.Double(Tw*2/3,Th*(0.60185185)+43) , new Point.Double(/*Tw*2/3-100*/Tw,Th*(0.60185185)+43), 5, 10);
+			RANDOM ai=new RANDOM(3,FncA,"RANDOM","AI",2,100,Tw*2/3,Th*(0.60185185),155,150,"A",100,new Point.Double(Tw*2/3,Th*(0.60185185)+43) , new Point.Double(Tw*2/3-100,Th*(0.60185185)+43), 5, 10);
 			//case 2:ai=new AI(3,FncA,"EASY","AI",2,100,Tw*2/3,Th*(0.60185185),155,150,"A",100,new Point.Double(Tw*2/3,Th*(0.60185185)+43) , new Point.Double(Tw*2/3-100,Th*(0.60185185)+43), 5, 10);break;
 			//default: ai=new AI(3,FncA,"MIRROR","AI",2,100,Tw*2/3,Th*(0.60185185),155,150,"A",100,new Point.Double(Tw*2/3,Th*(0.60185185)+43) , new Point.Double(Tw*2/3-100,Th*(0.60185185)+43), 5, 10);break;
 			
