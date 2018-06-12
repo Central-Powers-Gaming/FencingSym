@@ -1,9 +1,13 @@
+//Author: Timothy Barrett
+//Date Created: June. 1, 2018
+//Last modified: June. 14, 2018
+//Fencing Simulator 2018
 //program: Dr. Evil and Batman with Richard Dean Anderson star in: Fencing Symulator 2K18: Stabby Mc Kill Die Too: Electric Boogaloo: The Phantom Menace: Attack of the Clones: Revenge of the Sith: Wrath of Khan Part 2: Dead Man’s Chest: The third one, part 7 of 9 in the trilogy: Prequel to the Quran, by Sun Tzu and Robert Munch With Samuel L Jackson as “God” Based on a true story as told by Tommy Wiseau
 package Tim;
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import Ai.*;
 
-import Ai.AI;
 import character.Fencer;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -21,11 +25,12 @@ class batl extends JPanel implements KeyListener, MouseListener{
 	static final int Tw=Toolkit.getDefaultToolkit().getScreenSize().width;
 	static final int Th=Toolkit.getDefaultToolkit().getScreenSize().height;
 	static Fencer player;
-	static AI ai;
+	static RANDOM ai;
 	static double frames=0;	
 	static double time=System.currentTimeMillis();
 	static int level;
 	static Boolean toJump=false;
+	static Boolean AitoJump=false;
 	public batl(int level){
 		setFocusable( true );
 		this.addKeyListener(this);	
@@ -34,8 +39,15 @@ class batl extends JPanel implements KeyListener, MouseListener{
 		player=itz(0);
 		ai=itz2(0,level);
 		repaint();
-	}	
-
+	}
+	/*name: mouseClicked 
+	parameters:MouseEvent arg0
+	returns: none
+	dependencies: fencer, java.java.awt.event.*;
+	Last Modified:June 5, 2018
+	throws: none
+	description: lunges if mouse clicked
+	*/
 	public void mouseClicked(MouseEvent arg0){		
 		if(player.getSword().getLungeCD()<=0){
 			if(player.x+150+100<Tw){
@@ -45,14 +57,16 @@ class batl extends JPanel implements KeyListener, MouseListener{
 			player.frame=4;
 			player.getSword().setLungeCD(player.getSword().getLunge());
 		}
-	}	
-	public void keyReleased(KeyEvent e){}
-	public void keyTyped(KeyEvent e){}
-	public void mousePressed(MouseEvent event){}
-	public void mouseEntered(MouseEvent arg0) {}
-	public void mouseExited(MouseEvent arg0){}
-	public void mouseReleased(MouseEvent arg0) {}
-	
+	}
+	/*not used*/public void keyReleased(KeyEvent e){}public void keyTyped(KeyEvent e){}public void mousePressed(MouseEvent event){}public void mouseEntered(MouseEvent arg0) {}public void mouseExited(MouseEvent arg0){}public void mouseReleased(MouseEvent arg0) {}
+	/*name: keyPressed 
+	parameters:KeyEvent event
+	returns: none
+	dependencies: fencer, java.java.awt.event.*;
+	Last Modified:June 5, 2018
+	throws: none
+	description: mover player with wasd
+	*/
 	public void keyPressed (KeyEvent event) {
 		//System.out.println("Hi Key");
 	    if (event.getKeyCode() == KeyEvent.VK_D) {
@@ -105,6 +119,47 @@ class batl extends JPanel implements KeyListener, MouseListener{
 	    	}
 	    }
 	}
+	/*name: whoP
+	parameters:Fencer player,Ai ai
+	returns: boolean point
+	dependencies: fencer,AI 
+	Last Modified:June 10, 2018
+	throws: none
+	description: uses rules of fencing priority to determine who gets the point
+	*/
+	public static boolean whoP(Fencer player,RANDOM ai){
+		boolean point;//true player  false ai
+		if(ai.hit(player.getSword().tip)==true &&player.hit(ai.getSword().tip)==false){
+			point=true;
+		}else if(ai.hit(player.getSword().tip)==false &&player.hit(ai.getSword().tip)==true){
+			point=false;
+		}else{
+			if(player.getSword().getLungeCD()<ai.getSword().getLungeCD()){
+				point=true;
+			}else{
+				point=false;
+			}
+			if(player.getSpeed()>ai.getSpeed()){
+				point=true;
+			}else{
+				point=false;
+			}
+			if(player.getSword().getBlockCD()>ai.getSword().getBlockCD()){
+				point=true;
+			}else{
+				point=false;
+			}
+		}
+		return point;
+	}
+	/*name: paint
+	parameters:Graphics g
+	returns: none
+	dependencies: fencer,AI ,java.io,javax.swing,java.awt
+	Last Modified:June 13, 2018
+	throws: none
+	description: all graphics and interactions
+	*/
 	public void paint(Graphics g){ 
 		frames++;
 		//System.out.println("Hi");
@@ -113,11 +168,12 @@ class batl extends JPanel implements KeyListener, MouseListener{
 		g.setPaintMode();
 		int a=cal();
 		boolean go=false;
+		int hit=0;
 		BufferedImage back=null;
 		BufferedImage Star=null;
 		BufferedImage StarFill=null;
 		BufferedImage cross=null;
-		System.out.println("Lunge~~~~~~~~~~~: " +player.getSword().getLungeCD());
+		//System.out.println("Lunge~~~~~~~~~~~: " +player.getSword().getLungeCD());
 		if(player.getSword().getLungeCD()>0){
 			player.getSword().setLungeCD(player.getSword().getLungeCD()-1);
 		}
@@ -198,13 +254,38 @@ class batl extends JPanel implements KeyListener, MouseListener{
 		g.drawImage(cross,(int)Math.round(MouseInfo.getPointerInfo().getLocation().getX())-25,(int)Math.round(MouseInfo.getPointerInfo().getLocation().getY())-25,50,50, null);
 		//
 		//ai move
+		AitoJump=ai.control(player);
+		if(AitoJump==true){
+			AitoJump=ai.jump();
+		}
 		//~~~~~~~~~~~~~~~~~~~~~~~~Colisions~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+		player.getSword().colisionBlade(player.getSword(),ai.getSword());
+		player.hit(ai.getSword().tip);
+		if(ai.hit(player.getSword().tip)==true||player.hit(ai.getSword().tip)==true){
+			boolean q=whoP(player,ai);
+			if(q==true){
+				player.setScore(player.getScore()+1);
+			}else{
+				ai.setScore(ai.getScore()+1);
+			}
+			player=itz(player.getScore());
+			ai=itz2(ai.getScore(),level);
+			
+		}
 		//end check
-		if(player.getScore()>=5||ai.getScore()>=5){
+		if(player.getScore()>=5){
 			go=true;
 			level++;
 			player=itz(0);
 			ai=itz2(0,level);
+		}
+		else if(ai.getScore()>=5){
+			go=false;
+    		Main.main.setAlwaysOnTop(true);
+    		Main.main.setVisible(true);
+    		this.setSize(0, 0);
+    		this.setOpaque(false);
+    		this.setVisible(false);
 		}
 		if(go==true){
 			repaint();
@@ -224,7 +305,14 @@ class batl extends JPanel implements KeyListener, MouseListener{
 			time=System.currentTimeMillis();
 		}		
 	}
-	//to maintain an 16:9 aspect ratio on all screens
+	/*name: paint
+	parameters:none
+	returns: int a
+	dependencies: Tw, Th
+	Last Modified:June 1, 2018
+	throws: none
+	description: to maintain an 16:9 aspect ratio on all screens
+	*/
 	private int cal(){
 		int a;
 		double ratioW;
@@ -234,6 +322,14 @@ class batl extends JPanel implements KeyListener, MouseListener{
 		a=(int)(Math.round(900/ratioW));
 		return a;
 	}
+	/*name: itz
+	parameters:int hold
+	returns: Fencer player
+	dependencies: Fencer
+	Last Modified:June 3, 2018
+	throws: none
+	description: initializes player
+	*/
 	private static Fencer itz(int hold){
 		BufferedImage[] FncP=new BufferedImage[5] ;
 		for(int i=0;i<5;i++){
@@ -247,7 +343,15 @@ class batl extends JPanel implements KeyListener, MouseListener{
 		player.setScore(hold);
 		return player;
 	}
-	public static AI itz2(int hold,int level){
+	/*name: itz2
+	parameters:int hold, int level
+	returns: AI ai
+	dependencies: AI
+	Last Modified:June 3, 2018
+	throws: none
+	description: initializes ai
+	*/
+	public static RANDOM itz2(int hold,int level){
 		//ai
 		BufferedImage[] FncA=new BufferedImage[5] ;
 		for(int i=0;i<5;i++){
@@ -255,21 +359,27 @@ class batl extends JPanel implements KeyListener, MouseListener{
 				FncA[i] = ImageIO.read(new File("a"+(i+1)+".png"));
 			}catch (IOException e) {e.printStackTrace();}
 		}
-		System.out.println("level                "+level);
-		AI ai=new AI();
-		switch(level){
-			case 1:ai=new AI(3,FncA,"MIRROR","AI",2,100,Tw*2/3,Th*(0.60185185),155,150,"A",100,new Point.Double(Tw*2/3,Th*(0.60185185)+43) , new Point.Double(Tw*2/3-100,Th*(0.60185185)+43), 5, 10);break;
-			case 2:ai=new AI(3,FncA,"EASY","AI",2,100,Tw*2/3,Th*(0.60185185),155,150,"A",100,new Point.Double(Tw*2/3,Th*(0.60185185)+43) , new Point.Double(Tw*2/3-100,Th*(0.60185185)+43), 5, 10);break;
-			default: ai=new AI(3,FncA,"MIRROR","AI",2,100,Tw*2/3,Th*(0.60185185),155,150,"A",100,new Point.Double(Tw*2/3,Th*(0.60185185)+43) , new Point.Double(Tw*2/3-100,Th*(0.60185185)+43), 5, 10);break;
+		//System.out.println("level                "+level);
+			RANDOM ai=new RANDOM(3,FncA,"RANDOM","AI",2,100,Tw*2/3,Th*(0.60185185),155,150,"A",100,new Point.Double(Tw*2/3,Th*(0.60185185)+43) , new Point.Double(/*Tw*2/3-100*/Tw,Th*(0.60185185)+43), 5, 10);
+			//case 2:ai=new AI(3,FncA,"EASY","AI",2,100,Tw*2/3,Th*(0.60185185),155,150,"A",100,new Point.Double(Tw*2/3,Th*(0.60185185)+43) , new Point.Double(Tw*2/3-100,Th*(0.60185185)+43), 5, 10);break;
+			//default: ai=new AI(3,FncA,"MIRROR","AI",2,100,Tw*2/3,Th*(0.60185185),155,150,"A",100,new Point.Double(Tw*2/3,Th*(0.60185185)+43) , new Point.Double(Tw*2/3-100,Th*(0.60185185)+43), 5, 10);break;
 			
-		}
+		
 		ai.frame=0;
 		ai.setGround(Th*(0.743537037));
 		ai.setScore(hold);
 		return ai;
 	}
 }//end class
-public class battleScreen {		
+public class battleScreen {	
+	/*name: toBattle()
+	parameters:none
+	returns: none
+	dependencies: javax.swing,java.awt
+	Last Modified:June 3, 2018
+	throws: none
+	description: initializes game
+	*/
 	public static void toBattle(){
 		JFrame battle=new JFrame();
 		JPanel pane=(JPanel)battle.getContentPane();

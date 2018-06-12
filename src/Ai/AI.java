@@ -3,41 +3,34 @@ import java.awt.image.BufferedImage;
 
 import character.Fencer;
 import java.awt.Point;
+import java.awt.Toolkit;
 public class AI extends Fencer{
-	public AI(){super();}
-	public AI(int modifier,BufferedImage[] fncr,String difficulty,String Name, int Speed,int length, double x, double y, int height, int width, String NameB,int speedB, Point.Double handle, Point.Double tip, int block, int lunge) {
+	private Fencer enemy;
+	public AI(int modifier,BufferedImage[] fncr,String difficulty,String Name, int Speed,int length, double x, double y, int height, int width, String NameB,int speedB, Point.Double handle, Point.Double tip, int block, int lunge,Fencer enemy) {
 		super(fncr,Name, Speed+modifier, x, y, height, width, NameB, speedB+modifier, length, handle, tip, block, lunge+modifier);
 	}
-	private class RANDOM extends Fencer{
-		public RANDOM(int modifier,BufferedImage[] fncr,String difficulty,String Name, int Speed,int length, double x, double y, int height, int width, String NameB,int speedB, Point.Double handle, Point.Double tip, int block, int lunge) {
-			super(fncr,Name, Speed+modifier, x, y, height, width, NameB, speedB+modifier,length, handle, tip, block, lunge+modifier);
-		}
-		public void control(){
-			
-		}
-		private Point.Double changeTip(){
-			Point.Double tip=new Point.Double(Math.random()*)
-		}
-	}
-	private class EASY extends Fencer{
+}
+
+	
+	 class EASY extends Fencer{
 		private final static int modifier=-10;
 		public EASY(String difficulty,BufferedImage[] fncr,String Name, int Speed,int length,  double x, double y, int height, int width, String NameB,int speedB, Point.Double handle, Point.Double tip, int block, int lunge){
 			super(fncr,Name, Speed+modifier, x, y, height, width, NameB, speedB+modifier,length, handle, tip, block, lunge+modifier);
 		}
 	}
-	private class NORMAL extends Fencer{
+	 class NORMAL extends Fencer{
 		public NORMAL(String difficulty,BufferedImage[] fncr,String Name, int Speed,int length,  double x, double y, int height, int width, String NameB,int speedB, Point.Double handle, Point.Double tip, int block, int lunge){
 			super(fncr,Name, Speed, x, y, height, width, NameB, speedB,length, handle, tip, block, lunge);
 		}
 	}
-	private class HARD extends Fencer{
+	 class HARD extends Fencer{
 		private final static int modifier=10;
 		public HARD(String difficulty,BufferedImage[] fncr,String Name, int Speed,int length,  double x, double y, int height, int width, String NameB,int speedB, Point.Double handle, Point.Double tip, int block, int lunge){
 			super(fncr,Name, Speed+modifier, x, y, height, width, NameB, speedB+modifier, length,handle, tip, block, lunge+modifier);
 		}
 		
 	}
-	private class MIRROR extends Fencer{
+	 class MIRROR extends Fencer{
 		private Fencer enemy;
 		private Fencer change;
 		public MIRROR(String difficulty,BufferedImage[] fncr,String Name, int Speed,int length,  double x, double y, int height, int width, String NameB,int speedB, Point.Double handle, Point.Double tip, int block, int lunge,Fencer player){
@@ -76,4 +69,3 @@ public class AI extends Fencer{
 			return move;
 		}
 	}
-}
