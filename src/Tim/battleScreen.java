@@ -2,7 +2,7 @@
 //Date Created: June. 1, 2018
 //Last modified: June. 14, 2018
 //Fencing Simulator 2018
-//program: Dr. Evil and Batman with Richard Dean Anderson star in: Fencing Symulator 2K18: Stabby Mc Kill Die Too: Electric Boogaloo: The Phantom Menace: Attack of the Clones: Revenge of the Sith: Wrath of Khan Part 2: Dead Manís Chest: The third one, part 7 of 9 in the trilogy: Prequel to the Quran, by Sun Tzu and Robert Munch With Samuel L Jackson as ìGodî Based on a true story as told by Tommy Wiseau
+//program: Dr. Evil and Batman with Richard Dean Anderson star in: Fencing Symulator 2K18: Stabby Mc Kill Die Too: Electric Boogaloo: The Phantom Menace: Attack of the Clones: Revenge of the Sith: Wrath of Khan Part 2: Dead Man‚Äôs Chest: The third one, part 7 of 9 in the trilogy: Prequel to the Quran, by Sun Tzu and Robert Munch With Samuel L Jackson as ‚ÄúGod‚Äù Based on a true story as told by Tommy Wiseau
 package Tim;
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -20,6 +20,10 @@ import java.io.File;
 import java.io.IOException;
 import java.awt.geom.Point2D;
 import java.awt.geom.Point2D.Double;
+/**
+* the game itself, in all its glory
+* @author Tim
+**/
 class batl extends JPanel implements KeyListener, MouseListener{
 	static final int Tw=Toolkit.getDefaultToolkit().getScreenSize().width;
 	static final int Th=Toolkit.getDefaultToolkit().getScreenSize().height;
@@ -30,6 +34,11 @@ class batl extends JPanel implements KeyListener, MouseListener{
 	static int level;
 	static Boolean toJump=false;
 	static Boolean AitoJump=false;
+	/**
+	 * Constructor for batl
+	 * @author Tim
+	 * @param int level
+	 **/
 	public batl(int level){
 		setFocusable( true );
 		this.addKeyListener(this);	
@@ -47,6 +56,11 @@ class batl extends JPanel implements KeyListener, MouseListener{
 	throws: none
 	description: lunges if mouse clicked
 	*/
+	/**
+	 * lunge method
+	 * @author Tim
+	 * @param MouseEvent
+	 **/
 	public void mouseClicked(MouseEvent arg0){		
 		if(player.getSword().getLungeCD()<=0){
 			if(player.x+150+100<Tw){
@@ -66,6 +80,11 @@ class batl extends JPanel implements KeyListener, MouseListener{
 	throws: none
 	description: mover player with wasd
 	*/
+	/**
+	 * method for player movement
+	 * @author Tim
+	 * @param KeyEvent
+	 **/
 	public void keyPressed (KeyEvent event) {
 		//System.out.println("Hi Key");
 	    if (event.getKeyCode() == KeyEvent.VK_D) {
@@ -126,6 +145,11 @@ class batl extends JPanel implements KeyListener, MouseListener{
 	throws: none
 	description: uses rules of fencing priority to determine who gets the point
 	*/
+	/**
+	 * determines who gets the point for current encounter
+	 * @author Tim
+	 * @param Fencer object, RAMDOM object
+	 **/
 	public static boolean whoP(Fencer player,RANDOM ai){
 		boolean point;//true player  false ai
 		if(ai.hit(player.getSword().tip)==true &&player.hit(ai.getSword().tip)==false){
@@ -159,6 +183,11 @@ class batl extends JPanel implements KeyListener, MouseListener{
 	throws: none
 	description: all graphics and interactions
 	*/
+	/**
+	 * displays everything on screen
+	 * @author Tim
+	 * @param Graphics
+	 **/
 	public void paint(Graphics g){ 
 		frames++;
 		//System.out.println("Hi");
@@ -313,6 +342,10 @@ class batl extends JPanel implements KeyListener, MouseListener{
 	throws: none
 	description: to maintain an 16:9 aspect ratio on all screens
 	*/
+	/**
+	 * maintains aspect ratio of 16:9
+	 * @author Tim
+	 **/
 	private int cal(){
 		int a;
 		double ratioW;
@@ -330,6 +363,11 @@ class batl extends JPanel implements KeyListener, MouseListener{
 	throws: none
 	description: initializes player
 	*/
+	/**
+	 * sets up the player
+	 * @author Tim
+	 * @param int hold
+	 **/
 	private static Fencer itz(int hold){
 		BufferedImage[] FncP=new BufferedImage[5] ;
 		for(int i=0;i<5;i++){
@@ -351,6 +389,11 @@ class batl extends JPanel implements KeyListener, MouseListener{
 	throws: none
 	description: initializes ai
 	*/
+	/**
+	 * Sets up ai
+	 * @author Tim
+	 * @param int hold, int level
+	 **/
 	public static RANDOM itz2(int hold,int level){
 		//ai
 		BufferedImage[] FncA=new BufferedImage[5] ;
@@ -370,7 +413,11 @@ class batl extends JPanel implements KeyListener, MouseListener{
 		ai.setScore(hold);
 		return ai;
 	}
-}//end class
+}//end class\
+/**
+* Initializes game
+* @author Tim
+**/
 public class battleScreen {	
 	/*name: toBattle()
 	parameters:none
@@ -380,6 +427,11 @@ public class battleScreen {
 	throws: none
 	description: initializes game
 	*/
+	/**
+	 * constructor for battleScreen class
+	 * @author Tim
+	 * @param none
+	 **/
 	public static void toBattle(){
 		JFrame battle=new JFrame();
 		JPanel pane=(JPanel)battle.getContentPane();
