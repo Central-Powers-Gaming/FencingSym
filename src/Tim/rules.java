@@ -1,9 +1,18 @@
-//program: Dr. Evil and Batman with Richard Dean Anderson star in: Fencing Symulator 2K18: Stabby Mc Kill Die Too: Electric Boogaloo: The Phantom Menace: Attack of the Clones: Revenge of the Sith: Wrath of Khan Part 2: Dead Manís Chest: The third one, part 7 of 9 in the trilogy: Prequel to the Quran, by Sun Tzu and Robert Munch With Samuel L Jackson as ìGodî Based on a true story as told by Tommy Wiseau
+//program: Dr. Evil and Batman with Richard Dean Anderson star in: Fencing Symulator 2K18: Stabby Mc Kill Die Too: Electric Boogaloo: The Phantom Menace: Attack of the Clones: Revenge of the Sith: Wrath of Khan Part 2: Dead Man‚Äôs Chest: The third one, part 7 of 9 in the trilogy: Prequel to the Quran, by Sun Tzu and Robert Munch With Samuel L Jackson as ‚ÄúGod‚Äù Based on a true story as told by Tommy Wiseau
 package Tim;
 
 import character.Fencer;
 import character.Blade;
+/**
+* object that maintians law and order in this game (the rules)
+* @author Tim
+**/
 public class rules {
+	/**
+	 * determines who gets the points and when
+	 * @author Tim
+	 * @param Fencer player, Fencer ai
+	 **/
 	public static boolean whoP(Fencer player,Fencer ai){
 		boolean point;//true player  false ai
 		if(player.bladeHit()==true &&ai.bladeHit==false){
@@ -29,6 +38,11 @@ public class rules {
 		}
 
 	}
+	/**
+	 * determines the winner of the game
+	 * @author Tim
+	 * @param char gameMode, Fencer player, Fencer ai
+	 **/
 	public static int win(char gameMode,Fencer player,Fencer ai){
 		int w=0;//0 no win, 1 player win, 2 ai win
 		switch(gameMode){
