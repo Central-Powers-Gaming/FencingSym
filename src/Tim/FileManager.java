@@ -28,7 +28,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 /**
- * FileManager Object, Is the main menu for the game
+ * FileManager Object
  * @author Isaac Dunn
  **/
 public class FileManager {
