@@ -6,7 +6,7 @@
 package Tim;
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import Ai.AI;
+import Ai.*;
 import character.Fencer;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -24,7 +24,7 @@ class batl extends JPanel implements KeyListener, MouseListener{
 	static final int Tw=Toolkit.getDefaultToolkit().getScreenSize().width;
 	static final int Th=Toolkit.getDefaultToolkit().getScreenSize().height;
 	static Fencer player;
-	static AI ai;
+	static RANDOM ai;
 	static double frames=0;	
 	static double time=System.currentTimeMillis();
 	static int level;
@@ -126,7 +126,7 @@ class batl extends JPanel implements KeyListener, MouseListener{
 	throws: none
 	description: uses rules of fencing priority to determine who gets the point
 	*/
-	public static boolean whoP(Fencer player,AI ai){
+	public static boolean whoP(Fencer player,RANDOM ai){
 		boolean point;//true player  false ai
 		if(ai.hit(player.getSword().tip)==true &&player.hit(ai.getSword().tip)==false){
 			point=true;
@@ -235,15 +235,24 @@ class batl extends JPanel implements KeyListener, MouseListener{
 		g.drawString(ai.getName(),(int)(Tw-(Tw*(double).9))+Tw-(int)(2*(Tw-(Tw*(double).9)))-41*l, (int)(Th-(Th*(double).95)+Th/20+70));
 		//~~~~~~~~~~~~~~~~~~~~~~~~Blade Rendering~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		g.setColor(Color.GRAY);
+		player.getSword().length=100;
+		ai.getSword().length=100;
 		//player
-		
+		if(player.getSword().isControl()==true){
+			if(player.getSword().getTip().x<player.x-155){
+				player.getSword().setTip(new Point.Double(player.getSword().getTip().x+100,player.getSword().getTip().y));
+			}
+		}
 		player.getSword().setHandle(new Point.Double(player.x+148,player.y+45));
 		player.getSword().bladeMove((int)Math.round(MouseInfo.getPointerInfo().getLocation().getX())-25,(int)Math.round(MouseInfo.getPointerInfo().getLocation().getY())-25);
 		g.drawLine((int)player.getSword().getHandle().x, (int)player.getSword().getHandle().y, (int)player.getSword().getTip().x,(int) player.getSword().getTip().y);
 		//ai
+		ai.getSword().setHandle(new Point.Double(ai.x,ai.y+43));
+		if(ai.getSword().getTip().x>ai.x){
+			ai.getSword().setTip(new Point.Double(ai.getSword().getTip().x-100,ai.getSword().getTip().y));
+		}
 		//System.out.println(player.getSword().getHandle().x+" "+player.getSword().getHandle().y+" "+player.getSword().getTip().x+" "+player.getSword().getTip().y);
 		g.drawLine((int)ai.getSword().getHandle().x, (int)ai.getSword().getHandle().y, (int)ai.getSword().getTip().x,(int) ai.getSword().getTip().y);
-		
 		//~~~~~~~~~~~~~~~~~~~~~~~~Fencer Rendering~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		if(toJump==true){
 			toJump=player.jump();
@@ -253,12 +262,13 @@ class batl extends JPanel implements KeyListener, MouseListener{
 		g.drawImage(cross,(int)Math.round(MouseInfo.getPointerInfo().getLocation().getX())-25,(int)Math.round(MouseInfo.getPointerInfo().getLocation().getY())-25,50,50, null);
 		//
 		//ai move
-		AitoJump=ai..control(player);
+		AitoJump=ai.control(player);
 		if(AitoJump==true){
 			AitoJump=ai.jump();
 		}
 		//~~~~~~~~~~~~~~~~~~~~~~~~Colisions~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		player.getSword().colisionBlade(player.getSword(),ai.getSword());
+		ai.getSword().colisionBlade(ai.getSword(),player.getSword());
 		player.hit(ai.getSword().tip);
 		if(ai.hit(player.getSword().tip)==true||player.hit(ai.getSword().tip)==true){
 			boolean q=whoP(player,ai);
@@ -269,7 +279,8 @@ class batl extends JPanel implements KeyListener, MouseListener{
 			}
 			player=itz(player.getScore());
 			ai=itz2(ai.getScore(),level);
-			
+			toJump=false;
+			AitoJump=false;
 		}
 		//end check
 		if(player.getScore()>=5){
@@ -292,10 +303,8 @@ class batl extends JPanel implements KeyListener, MouseListener{
 			go=true;
 			level++;
 			player=itz(0);
-			ai=itz2(0,level);
-			
-		}
-	
+			ai=itz2(0,level);			
+		}	
 		//fps
 		frames++;
 		if((System.currentTimeMillis()-time)/1000>=1){
@@ -350,7 +359,7 @@ class batl extends JPanel implements KeyListener, MouseListener{
 	throws: none
 	description: initializes ai
 	*/
-	public static AI itz2(int hold,int level){
+	public static RANDOM itz2(int hold,int level){
 		//ai
 		BufferedImage[] FncA=new BufferedImage[5] ;
 		for(int i=0;i<5;i++){
@@ -359,13 +368,11 @@ class batl extends JPanel implements KeyListener, MouseListener{
 			}catch (IOException e) {e.printStackTrace();}
 		}
 		//System.out.println("level                "+level);
-		
-		switch(level){
-			case 1:AI.RANDOM ai=new AI.RANDOM(3,FncA,"RANDOM","AI",2,100,Tw*2/3,Th*(0.60185185),155,150,"A",100,new Point.Double(Tw*2/3,Th*(0.60185185)+43) , new Point.Double(/*Tw*2/3-100*/Tw,Th*(0.60185185)+43), 5, 10);break;
-			case 2:ai=new AI(3,FncA,"EASY","AI",2,100,Tw*2/3,Th*(0.60185185),155,150,"A",100,new Point.Double(Tw*2/3,Th*(0.60185185)+43) , new Point.Double(Tw*2/3-100,Th*(0.60185185)+43), 5, 10);break;
-			default: ai=new AI(3,FncA,"MIRROR","AI",2,100,Tw*2/3,Th*(0.60185185),155,150,"A",100,new Point.Double(Tw*2/3,Th*(0.60185185)+43) , new Point.Double(Tw*2/3-100,Th*(0.60185185)+43), 5, 10);break;
+			RANDOM ai=new RANDOM(3,FncA,"RANDOM","AI",2,100,Tw*2/3,Th*(0.60185185),155,150,"A",100,new Point.Double(Tw*2/3,Th*(0.60185185)+43) , new Point.Double(Tw*2/3-100,Th*(0.60185185)+43), 5, 10);
+			//case 2:ai=new AI(3,FncA,"EASY","AI",2,100,Tw*2/3,Th*(0.60185185),155,150,"A",100,new Point.Double(Tw*2/3,Th*(0.60185185)+43) , new Point.Double(Tw*2/3-100,Th*(0.60185185)+43), 5, 10);break;
+			//default: ai=new AI(3,FncA,"MIRROR","AI",2,100,Tw*2/3,Th*(0.60185185),155,150,"A",100,new Point.Double(Tw*2/3,Th*(0.60185185)+43) , new Point.Double(Tw*2/3-100,Th*(0.60185185)+43), 5, 10);break;
 			
-		}
+		
 		ai.frame=0;
 		ai.setGround(Th*(0.743537037));
 		ai.setScore(hold);
