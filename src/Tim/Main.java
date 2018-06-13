@@ -1,9 +1,9 @@
 package Tim;
-//Author: Isak
+//Author: Isaac
 //Date Created: June. 1, 2018
 //Last modified: June. 14, 2018
 //Fencing Simulator 2018
-//program: Dr. Evil and Batman with Richard Dean Anderson star in: Fencing Symulator 2K18: Stabby Mc Kill Die Too: Electric Boogaloo: The Phantom Menace: Attack of the Clones: Revenge of the Sith: Wrath of Khan Part 2: Dead Manís Chest: The third one, part 7 of 9 in the trilogy: Prequel to the Quran, by Sun Tzu and Robert Munch With Samuel L Jackson as ìGodî Based on a true story as told by Tommy Wiseau
+//program: Dr. Evil and Batman with Richard Dean Anderson star in: Fencing Symulator 2K18: Stabby Mc Kill Die Too: Electric Boogaloo: The Phantom Menace: Attack of the Clones: Revenge of the Sith: Wrath of Khan Part 2: Dead Man‚Äôs Chest: The third one, part 7 of 9 in the trilogy: Prequel to the Quran, by Sun Tzu and Robert Munch With Samuel L Jackson as ‚ÄúGod‚Äù Based on a true story as told by Tommy Wiseau
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,7 +22,10 @@ import javax.*;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.util.*;
-
+/**
+* the main menu for game
+* @author Isaac
+**/
 public class Main {
 	static int w = Toolkit.getDefaultToolkit().getScreenSize().width;//width of screen
 	static int l = Toolkit.getDefaultToolkit().getScreenSize().height;//height of screen
@@ -34,6 +37,10 @@ public class Main {
 	private static JButton btnH  = new JButton("HELP");//
 	private static JButton btnE  = new JButton("EXIT");//
 	private static JButton btnS  = new JButton("SCORES");//
+	/**
+	 * sets up all graphics objects
+	 * @author Isaac
+	 **/
 	private static void initialize(){
 		back.setLayout(new BorderLayout());
 		try{
@@ -86,6 +93,10 @@ public class Main {
 	    main.pack();
 	    main.setVisible(true);	    
 	}
+	/**
+	 * starts the entire menu
+	 * @author Isaac
+	 **/
 	/*name: start() 
 	parameters:nonne
 	returns: none
@@ -114,6 +125,10 @@ public class Main {
 	throws: none
 	description: button fuctionality
 	*/
+	/**
+	 * intitalizes all actionlisteners
+	 * @author Isaac
+	 **/
 	private static void initEvent(){
 
 	    main.addWindowListener(new WindowAdapter() {
@@ -148,10 +163,18 @@ public class Main {
 		 });
 	}
 	//help button
+	/**
+	 * help popup
+	 * @author Isaac
+	 **/
 	private static void help(){
 		JOptionPane.showMessageDialog(null, "Move: wad\nAim: Mouse\nLunge: Left Click ", "HELP", JOptionPane.INFORMATION_MESSAGE);
 	}
 	//high score button
+	/**
+	 * reads in the highscores for user
+	 * @author Isaac
+	 **/
 	private static void readScores(){
 		String end="", hold="";
 		System.out.println("Get high scores.");
@@ -168,6 +191,10 @@ public class Main {
 			System.out.print("Ooops!");
 		}		
 	}//load save button
+	/**
+	 * load users sace file
+	 * @author Tim
+	 **/
 	private static void loadSave(){
 		FileIo hi=new FileIo();
 		System.out.println("Get save game.");
@@ -186,6 +213,10 @@ public class Main {
 		
 	}
 	//play game
+	/**
+	 * starts a new game
+	 * @author Isaac
+	 **/
 	private static void play(){
 		JFrame battle=new JFrame();
 		JPanel pane=(JPanel)battle.getContentPane();
