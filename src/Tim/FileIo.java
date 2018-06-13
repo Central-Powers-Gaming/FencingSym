@@ -2,14 +2,27 @@
 //Date Created: June. 1, 2018
 //Last modified: June. 3, 2018
 //Fencing Simulator 2018
-//program: Dr. Evil and Batman with Richard Dean Anderson star in: Fencing Symulator 2K18: Stabby Mc Kill Die Too: Electric Boogaloo: The Phantom Menace: Attack of the Clones: Revenge of the Sith: Wrath of Khan Part 2: Dead Manís Chest: The third one, part 7 of 9 in the trilogy: Prequel to the Quran, by Sun Tzu and Robert Munch With Samuel L Jackson as ìGodî Based on a true story as told by Tommy Wiseau
+//program: Dr. Evil and Batman with Richard Dean Anderson star in: Fencing Symulator 2K18: Stabby Mc Kill Die Too: Electric Boogaloo: The Phantom Menace: Attack of the Clones: Revenge of the Sith: Wrath of Khan Part 2: Dead Man‚Äôs Chest: The third one, part 7 of 9 in the trilogy: Prequel to the Quran, by Sun Tzu and Robert Munch With Samuel L Jackson as ‚ÄúGod‚Äù Based on a true story as told by Tommy Wiseau
 package Tim;
 import java.awt.FileDialog;
 import java.io.*;
 import javax.swing.JFrame;
 import sun.audio.*;
+	/**
+	 * The FileIo Object
+	 * @author Tim Barrett
+	 **/
 public class FileIo {
+	/**
+	 * Constructor
+	 **/
 	public FileIo(){};
+	/**
+	 * A liknedlist object that reads in the high  scores
+	 * @author Tim
+	 * @param none
+	 * @return Char[][]
+	 **/
 	public static LinkedList inScore(){
 		//name: in
 		//parameters: none
@@ -47,6 +60,11 @@ public class FileIo {
 		}
 		return nm;
 	}
+	/**
+	 * Saves array to file
+	 * @author Tim
+	 * @param LinkedList Object
+	 **/
 	public void saveH(LinkedList nm){
 		//name: save
 		//parameters: String[] sv
@@ -85,6 +103,12 @@ public class FileIo {
 		}
 	}
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	/**
+	 * Loads array with savegame information from file
+	 * @author Tim
+	 * @param none
+	 * @return GameSave
+	 **/
 	public GameSave inGame(){
 		//name: in
 		//parameters: none
@@ -138,6 +162,12 @@ public class FileIo {
 		}
 		return nm;
 	}
+	/**
+	 * Saves save info with array to file
+	 * @author Tim
+	 * @param GameSave
+	 * @return GameSave
+	 **/
 	public static void saveGame(GameSave nm){
 		//name: save
 		//parameters: String[] sv
@@ -180,6 +210,11 @@ public class FileIo {
 		}
 	}
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	/**
+	 * Sets up music
+	 * @author Tim
+	 * @param String
+	 **/
 	public void music(String title) {       
         AudioPlayer MGP = AudioPlayer.player;
         AudioStream BGM;
