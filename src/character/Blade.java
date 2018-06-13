@@ -3,11 +3,14 @@ package character;
 //Date Created: June. 1, 2018
 //Last modified: June. 14, 2018
 //Fencing Simulator 2018
-//program: Dr. Evil and Batman with Richard Dean Anderson star in: Fencing Symulator 2K18: Stabby Mc Kill Die Too: Electric Boogaloo: The Phantom Menace: Attack of the Clones: Revenge of the Sith: Wrath of Khan Part 2: Dead Manís Chest: The third one, part 7 of 9 in the trilogy: Prequel to the Quran, by Sun Tzu and Robert Munch With Samuel L Jackson as ìGodî Based on a true story as told by Tommy Wiseau
+//program: Dr. Evil and Batman with Richard Dean Anderson star in: Fencing Symulator 2K18: Stabby Mc Kill Die Too: Electric Boogaloo: The Phantom Menace: Attack of the Clones: Revenge of the Sith: Wrath of Khan Part 2: Dead Man‚Äôs Chest: The third one, part 7 of 9 in the trilogy: Prequel to the Quran, by Sun Tzu and Robert Munch With Samuel L Jackson as ‚ÄúGod‚Äù Based on a true story as told by Tommy Wiseau
 import java.awt.Point;
 import java.awt.geom.Line2D;
 import java.awt.image.BufferedImage;
-
+/**
+* the blade object
+* @author Brad
+**/
 public class Blade {
 /* CHANGES OF HANDLE NEED TO BE ACOUNTED FOR AND COMPLETED
  * UPDATE CODE WHEN MORE INFORMATIONABOUT SPRITES ARE DECIDED
@@ -31,6 +34,11 @@ public int lunge;
 private Point.Double target;
 public String Name;
 //constructor
+/**
+* constructor for the blade object
+* @author Brad
+* @param String Name,int speed,double length, Point.Double handle,Point.Double tip, int block, int lunge
+**/
 public Blade(String Name,int speed,double length, Point.Double handle,Point.Double tip, int block, int lunge) {
 	super();
 	this.Name=Name;
@@ -76,10 +84,20 @@ private Point.Double ontoCircle(Point.Double p,Point.Double c,double r){
 	}
 	return to;
 }
+/**
+* manages blad movement
+* @author Brad
+* @param double x, double y
+**/
 public void bladeMove(double x,double y){
 Point.Double xy=new Point.Double(x,y);
 this.bladeMove(xy);
 }
+/**
+* manages blade movement with the mouse
+* @author Brad
+* @param Point.double
+**/
 public void bladeMove(Point.Double mouse){
 	if(control){
 	Point.Double xy=ontoCircle(mouse,handle,length);
@@ -94,6 +112,12 @@ public void bladeMove(Point.Double mouse){
 		}
 	}
 }
+/**
+* manages blade collision
+* @author Brad
+* @param Blade b1, Blade b2
+* @return boolean
+**/
 public Boolean colisionBlade(Blade b1,Blade b2){
 	if(b1.getTip().getX()==b2.getTip().getX()&&b1.getTip().getY()==b2.getTip().getY()){
 		if(b1.getBlockCD()==0&&b2.getBlockCD()==0){
@@ -124,6 +148,11 @@ public Boolean colisionBlade(Blade b1,Blade b2){
 		}else return false;
 	}else return false;
 }
+/**
+* moves the blade
+* @author Brad
+* @param Point.double
+**/
 void move(Point.Double xy){
 	if(tip.x<xy.x){
 		double Xchange=xy.x-tip.x;
@@ -168,36 +197,80 @@ void move(Point.Double xy){
 }
 //getters and setters
 //5/30/18
+/**
+* @author Brad
+* @return int speed
+**/
 public int getSpeed() {
 	return Speed;
 }
+/**
+* @author Brad
+* @param int speed
+**/
 public void setSpeed(int speed) {
 	Speed = speed;
 }
+/**
+* @author Brad
+* @return int XSpeed
+**/
 public int getXSpeed() {
 	return XSpeed;
 }
+/**
+* @author Brad
+* @param int xSpeed
+**/
 public void setXSpeed(int xSpeed) {
 	XSpeed = xSpeed;
 }
+/**
+* @author Brad
+* @return int YSpeed
+**/
 public int getYSpeed() {
 	return YSpeed;
 }
+/**
+* @author Brad
+* @param int ySpeed
+**/
 public void setYSpeed(int ySpeed) {
 	YSpeed = ySpeed;
 }
+/**
+* @author Brad
+* @return Point.double
+**/
 public Point.Double getHandle() {
 	return handle;
 }
+/**
+* @author Brad
+* @param Point.Double
+**/
 public void setHandle(Point.Double handle) {
 	this.handle = handle;
 }
+/**
+* @author Brad
+* @return Point.Double
+**/
 public Point.Double getTip() {
 	return tip;
 }
+/**
+* @author Brad
+* @param Point.Double
+**/
 public void setTip(Point.Double tip) {
 	this.tip = tip;
 }
+/**
+* @author Brad
+* @return speed
+**/
 public int getLunge() {
 	return lunge;
 }
