@@ -56,9 +56,11 @@ public void move(boolean forwards){
 	if(forwards){
 		x+=Speed;
 		Sword.setTip(new Point.Double(Sword.getTip().getX()+Speed,Sword.getTip().getY()));
+		Sword.setHandle(new Point.Double(Sword.getHandle().getX()+Speed,Sword.getHandle().getY()));
 	}else if(!forwards){
 		x-=Speed;
 		Sword.setTip(new Point.Double(Sword.getTip().getX()-Speed,Sword.getTip().getY()));
+		Sword.setHandle(new Point.Double(Sword.getHandle().getX()-Speed,Sword.getHandle().getY()));
 	}
 }
 /* jump code
@@ -90,7 +92,7 @@ public boolean jump(){
 public void lunge(Fencer enemy){
 	if(!(Sword.lungeCD>0)){
 		if(!Sword.colisionBlade(Sword, enemy.getSword())){
-			Sword.tip=new Point.Double(width+x+Sword.getLength(),ground-height/2);
+			Sword.tip=new Point.Double(width+x+Sword.getLength(),height/2);
 			Sword.handle=new Point.Double(x+width,height/2);
 		}Sword.lungeCD=Sword.getLunge();
 	}

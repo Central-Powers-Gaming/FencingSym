@@ -3,7 +3,7 @@ package character;
 //Date Created: June. 1, 2018
 //Last modified: June. 14, 2018
 //Fencing Simulator 2018
-//program: Dr. Evil and Batman with Richard Dean Anderson star in: Fencing Symulator 2K18: Stabby Mc Kill Die Too: Electric Boogaloo: The Phantom Menace: Attack of the Clones: Revenge of the Sith: Wrath of Khan Part 2: Dead Man’s Chest: The third one, part 7 of 9 in the trilogy: Prequel to the Quran, by Sun Tzu and Robert Munch With Samuel L Jackson as “God” Based on a true story as told by Tommy Wiseau
+//program: Dr. Evil and Batman with Richard Dean Anderson star in: Fencing Symulator 2K18: Stabby Mc Kill Die Too: Electric Boogaloo: The Phantom Menace: Attack of the Clones: Revenge of the Sith: Wrath of Khan Part 2: Dead Man’s Chest: The third one, part 7 of 9 in the trilogy: Prequel to the Quran, by Sun Tzu and Robert Munch With Samuel L Jackson as Based on a true story as told by Tommy Wiseau
 import java.awt.Point;
 import java.awt.geom.Line2D;
 import java.awt.image.BufferedImage;
@@ -58,13 +58,8 @@ public Blade(String Name,int speed,double length, Point.Double handle,Point.Doub
 //sets the location of target for blade movement using algorithm based upon blade length 
 
 public void setTarget(Point.Double mouse){
-	Point.Double m=new Point.Double(mouse.getX(),mouse.getY());
-	double dis=Math.sqrt((tip.x-mouse.x)*(tip.x-mouse.x)+(tip.y-mouse.y)*(tip.y-mouse.y));
-	if(dis==length){
-		target=new Point.Double(m.getX(),m.getY());
-	}else{
-		target=ontoCircle(m, handle, length);
-	}
+		target=ontoCircle(mouse, handle, length);
+	
 }
 /*p=point to convert
  * c=center of circle
@@ -110,7 +105,7 @@ public void bladeMove(Point.Double mouse){
 			control=true;
 			this.bladeMove(mouse);
 		}
-	}
+	}line=new Line2D.Double(tip, handle);
 }
 /**
 * manages blade collision
@@ -132,14 +127,14 @@ public Boolean colisionBlade(Blade b1,Blade b2){
 			return false;
 		}
 	}
-	else if(b1.getLine().contains(b2.getTip())){
+	else if(b1.contains(b2.getTip())){
 		if(b1.getBlockCD()==0){
 			b1.setBlockCD(b1.getBlock());
 			b2.setControl(false);
 			b2.setTarget(new Point.Double(b2.tip.x+200,b2.tip.y+100));
 			return true;
 		}else return false;
-	}else if(b2.getLine().contains(b1.getTip())){
+	}else if(b2.contains(b1.getTip())){
 		if(b2.getBlockCD()==0){
 			b2.setBlockCD(b2.getBlock());
 			b1.setControl(false);
@@ -148,6 +143,24 @@ public Boolean colisionBlade(Blade b1,Blade b2){
 		}else return false;
 	}else return false;
 }
+private boolean contains(Point.Double tip){
+	if(getLine().getX1()<tip.getX()&&tip.getX()<getLine().getX2()){
+		if(getLine().getY1()<tip.getY()&&tip.getY()<getLine().getY2()){
+			return true;
+		}
+		else if(getLine().getY1()>tip.getY()&&tip.getY()>getLine().getY2()){
+			return true;
+		}
+	}else if(getLine().getX1()>tip.getX()&&tip.getX()>getLine().getX2()){
+		if(getLine().getY1()<tip.getY()&&tip.getY()<getLine().getY2()){
+			return true;
+		}
+		else if(getLine().getY1()>tip.getY()&&tip.getY()>getLine().getY2()){
+			return true;
+		}
+	}return false;
+}
+
 /**
 * moves the blade
 * @author Brad

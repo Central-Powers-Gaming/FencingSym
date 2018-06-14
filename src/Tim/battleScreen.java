@@ -2,7 +2,7 @@
 //Date Created: June. 1, 2018
 //Last modified: June. 14, 2018
 //Fencing Simulator 2018
-//program: Dr. Evil and Batman with Richard Dean Anderson star in: Fencing Symulator 2K18: Stabby Mc Kill Die Too: Electric Boogaloo: The Phantom Menace: Attack of the Clones: Revenge of the Sith: Wrath of Khan Part 2: Dead Man’s Chest: The third one, part 7 of 9 in the trilogy: Prequel to the Quran, by Sun Tzu and Robert Munch With Samuel L Jackson as “God” Based on a true story as told by Tommy Wiseau
+//program: Dr. Evil and Batman with Richard Dean Anderson star in: Fencing Symulator 2K18: Stabby Mc Kill Die Too: Electric Boogaloo: The Phantom Menace: Attack of the Clones: Revenge of the Sith: Wrath of Khan Part 2: Dead Man’s Chest: The third one, part 7 of 9 in the trilogy: Prequel to the Quran, by Sun Tzu and Robert Munch With Samuel L Jackson as Based on a true story as told by Tommy Wiseau
 package Tim;
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -272,6 +272,11 @@ class batl extends JPanel implements KeyListener, MouseListener{
 		g.drawLine((int)player.getSword().getHandle().x, (int)player.getSword().getHandle().y, (int)player.getSword().getTip().x,(int) player.getSword().getTip().y);
 		//ai
 		//System.out.println(player.getSword().getHandle().x+" "+player.getSword().getHandle().y+" "+player.getSword().getTip().x+" "+player.getSword().getTip().y);
+		if(ai.getSword().getTip().x>ai.getSword().getHandle().x){
+			//System.out.println("help, help, help");
+			double xHelp=ai.getSword().getTip().x-ai.getSword().getHandle().x;
+			ai.getSword().getTip().x=ai.getSword().getHandle().x-xHelp;
+		}
 		g.drawLine((int)ai.getSword().getHandle().x, (int)ai.getSword().getHandle().y, (int)ai.getSword().getTip().x,(int) ai.getSword().getTip().y);
 		
 		//~~~~~~~~~~~~~~~~~~~~~~~~Fencer Rendering~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -289,7 +294,7 @@ class batl extends JPanel implements KeyListener, MouseListener{
 		}
 		//~~~~~~~~~~~~~~~~~~~~~~~~Colisions~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		player.getSword().colisionBlade(player.getSword(),ai.getSword());
-		ai.getSword().colisionBlade(ai.getSword(),player.getSword());
+//		ai.getSword().colisionBlade(ai.getSword(),player.getSword());
 		player.hit(ai.getSword().tip);
 		if(ai.hit(player.getSword().tip)==true||player.hit(ai.getSword().tip)==true){
 			boolean q=whoP(player,ai);
@@ -403,7 +408,9 @@ class batl extends JPanel implements KeyListener, MouseListener{
 			}catch (IOException e) {e.printStackTrace();}
 		}
 		//System.out.println("level                "+level);
-			RANDOM ai=new RANDOM(3,FncA,"RANDOM","AI",2,100,Tw*2/3,Th*(0.60185185),155,150,"A",100,new Point.Double(Tw*2/3,Th*(0.60185185)+43) , new Point.Double(Tw*2/3-100,Th*(0.60185185)+43), 5, 10);
+		
+		//DO NOT SET SPEEDB ABOVE 50, ANYTHING ELSE CAUSES JUMPY BLADE MOTION
+			RANDOM ai=new RANDOM(3,FncA,"RANDOM","AI",2,100,Tw*2/3,Th*(0.60185185),155,150,"A",50,new Point.Double(Tw*2/3,Th*(0.60185185)+43) , new Point.Double(Tw*2/3-100,Th*(0.60185185)+43), 5, 10);
 			//case 2:ai=new AI(3,FncA,"EASY","AI",2,100,Tw*2/3,Th*(0.60185185),155,150,"A",100,new Point.Double(Tw*2/3,Th*(0.60185185)+43) , new Point.Double(Tw*2/3-100,Th*(0.60185185)+43), 5, 10);break;
 			//default: ai=new AI(3,FncA,"MIRROR","AI",2,100,Tw*2/3,Th*(0.60185185),155,150,"A",100,new Point.Double(Tw*2/3,Th*(0.60185185)+43) , new Point.Double(Tw*2/3-100,Th*(0.60185185)+43), 5, 10);break;
 			
