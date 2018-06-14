@@ -30,7 +30,7 @@ class batl extends JPanel implements KeyListener, MouseListener{
 	static int level;
 	static Boolean toJump=false;
 	static Boolean AitoJump=false;
-	public Boolean dev=false;
+	public Boolean dev=true;
 	public batl(int level){
 		setFocusable( true );
 		this.addKeyListener(this);	
@@ -261,13 +261,16 @@ class batl extends JPanel implements KeyListener, MouseListener{
 				player.getSword().setTip(new Point.Double(player.x+155+100,player.getSword().getTip().y));
 			}
 		}
+		if(player.getSword().getTip().x<player.getSword().handle.x){
+			player.getSword().setTip(new Point.Double((player.getSword().handle.x-player.getSword().getTip().x)+player.getSword().handle.x,player.getSword().getTip().y));
+		}
 		player.getSword().setHandle(new Point.Double(player.x+148,player.y+45));
 		player.getSword().bladeMove((int)Math.round(MouseInfo.getPointerInfo().getLocation().getX())-25,(int)Math.round(MouseInfo.getPointerInfo().getLocation().getY())-25);
 		g.drawLine((int)player.getSword().getHandle().x, (int)player.getSword().getHandle().y, (int)player.getSword().getTip().x,(int) player.getSword().getTip().y);
 		//ai
 		ai.getSword().setHandle(new Point.Double(ai.x,ai.y+43));
-		if(ai.getSword().getTip().x>ai.x){
-			ai.getSword().setTip(new Point.Double(ai.x-100,ai.getSword().getTip().y));
+		if(ai.getSword().getTip().x>ai.getSword().getHandle().x){
+			ai.getSword().setTip(new Point.Double(ai.getSword().handle.x-(ai.getSword().getTip().x-ai.getSword().handle.x),ai.getSword().getTip().y));
 		}
 		//System.out.println(player.getSword().getHandle().x+" "+player.getSword().getHandle().y+" "+player.getSword().getTip().x+" "+player.getSword().getTip().y);
 		g.drawLine((int)ai.getSword().getHandle().x, (int)ai.getSword().getHandle().y, (int)ai.getSword().getTip().x,(int) ai.getSword().getTip().y);
@@ -387,7 +390,7 @@ class batl extends JPanel implements KeyListener, MouseListener{
 			}catch (IOException e) {e.printStackTrace();}
 		}
 		//System.out.println("level                "+level);
-			RANDOM ai=new RANDOM(level+2,FncA,"RANDOM","AI",2,100,Tw*2/3,Th*(0.60185185),155,150,"A",100,new Point.Double(Tw*2/3,Th*(0.60185185)+43) , new Point.Double(Tw*2/3-100,Th*(0.60185185)+43), 5, 10);
+			RANDOM ai=new RANDOM(level+2,FncA,"RANDOM","AI",2,100,Tw*2/3,Th*(0.60185185),155,150,"A",15,new Point.Double(Tw*2/3,Th*(0.60185185)+43) , new Point.Double(Tw*2/3-100,Th*(0.60185185)+43), 5, 10);
 			//case 2:ai=new AI(3,FncA,"EASY","AI",2,100,Tw*2/3,Th*(0.60185185),155,150,"A",100,new Point.Double(Tw*2/3,Th*(0.60185185)+43) , new Point.Double(Tw*2/3-100,Th*(0.60185185)+43), 5, 10);break;
 			//default: ai=new AI(3,FncA,"MIRROR","AI",2,100,Tw*2/3,Th*(0.60185185),155,150,"A",100,new Point.Double(Tw*2/3,Th*(0.60185185)+43) , new Point.Double(Tw*2/3-100,Th*(0.60185185)+43), 5, 10);break;
 			

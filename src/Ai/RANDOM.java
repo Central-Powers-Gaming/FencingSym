@@ -74,14 +74,14 @@ public class RANDOM extends Fencer{
 	**/
 	private void lungeChoice(Fencer enemy){
 		int ran=(int)(Math.random()*100+1);
-		if(ran==1)
+		if(ran<3)
 			lungeAI(enemy);
 	}
 	private void lungeAI(Fencer enemy){
 		if(!(Sword.lungeCD>0)){
 			x-=50;
 			if(!Sword.colisionBlade(Sword, enemy.getSword())){
-				Sword.tip=new Point.Double(x-Sword.getLength(),height/2);
+				Sword.tip=new Point.Double(x-Sword.getLength(),y+height/2);
 				Sword.handle=new Point.Double(x-width,height/2);
 			}Sword.lungeCD=Sword.getLunge();
 			Sword.setLungeCD(Sword.getLunge());
