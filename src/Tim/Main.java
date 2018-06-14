@@ -1,5 +1,5 @@
 package Tim;
-//Author: Isak
+//Author: Isaac
 //Date Created: June. 1, 2018
 //Last modified: June. 14, 2018
 //Fencing Simulator 2018
@@ -30,7 +30,7 @@ public class Main {
 	private static JLabel back=new JLabel();//will be used for backround
 	private static JPanel panel=new JPanel();//panel to hold buttons
 	private static JButton btnP  = new JButton("PLAY");//button options
-	private static JButton btnL  = new JButton("LOAD SAVE");//
+	private static JButton btnL  = new JButton("CREDITS");//
 	private static JButton btnH  = new JButton("HELP");//
 	private static JButton btnE  = new JButton("EXIT");//
 	private static JButton btnS  = new JButton("SCORES");//
@@ -132,7 +132,7 @@ public class Main {
 		});
 	    btnL.addActionListener(new ActionListener() {
 		      public void actionPerformed(ActionEvent e) {
-		    	  FileManager l=new FileManager();
+		    	  loadSave();
 		      }
 		});
 	    btnS.addActionListener(new ActionListener() {
@@ -148,7 +148,7 @@ public class Main {
 	}
 	//help button
 	private static void help(){
-		JOptionPane.showMessageDialog(null, "Move: wad\nAim: Mouse\nLunge: Left Click ", "HELP", JOptionPane.INFORMATION_MESSAGE);
+		JOptionPane.showMessageDialog(null, "Move: ad\nJump: w\nAim: Mouse\nLunge: Left Click ", "HELP", JOptionPane.INFORMATION_MESSAGE);
 	}
 	//high score button
 	private static void readScores(){
@@ -169,20 +169,12 @@ public class Main {
 	}//load save button
 	private static void loadSave(){
 		FileIo hi=new FileIo();
-		System.out.println("Get save game.");
-		GameSave b=new GameSave();
-		b=hi.inGame();
-		b.print();
-		String hold="";
-		hold+=b.getpName()+"\n";
-		hold+=b.getLevelP()+"\n";
-		hold+=b.getScore()+"\n";
+		//System.out.println("Credits.");
 		try{
-			JOptionPane.showMessageDialog(null, hold, "Save", JOptionPane.INFORMATION_MESSAGE);
+			int ans=JOptionPane.showOptionDialog(null,"Fencing Simulator 2K18\n   Programed:\nTimothy Barrett\nIsaac Dunn\nBradley Palmer\n   Fencer Sprites:\nAiden Roseborough\n   Art:\nTimothyBarrett\n   UI:\nTimothy Barrett\nIsaac Dunn\n   AI:\nBradley Palmer\n   Software Used:\nEclipse\nPaint\nGimp\nGitHub\nPhotoShop", "Credits", 0, 1,null,null,null);
 		}catch (Exception e){
 			System.out.print("Ooops!");
-		}
-		
+		}		
 	}
 	//play game
 	private static void play(){
@@ -193,11 +185,11 @@ public class Main {
 		battle.setExtendedState(JFrame.MAXIMIZED_BOTH); 
 		battle.setUndecorated(true);
 		battle.setVisible(true);
-		FileIo a=new FileIo();
-		a.music("Future Gladiator.wav");//"Future Gladiator.wav"    "Neo Western.wav"  "7.wav"
 		main.setVisible(false);
 	}//end main
 	public static void main(String[] args) {
+		FileIo a=new FileIo();
+		a.music("Future Gladiator.wav");//"Future Gladiator.wav"    "Neo Western.wav"  "7.wav"
 		start();
 	}
 }

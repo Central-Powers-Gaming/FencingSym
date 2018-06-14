@@ -75,7 +75,7 @@ private Point.Double ontoCircle(Point.Double p,Point.Double c,double r){
 	double aY=c.y+vY/magV*r;
 	Point.Double to=new Point.Double(aX,aY);
 	if(!distanceCheck(to)){
-		System.out.println(checkLength(to,c));
+		//System.out.println(checkLength(to,c));
 	}
 	return to;
 }
@@ -133,14 +133,14 @@ public Boolean colisionBlade(Blade b1,Blade b2){
 		if(b1.getBlockCD()==0){
 			b1.setBlockCD(b1.getBlock());
 			b2.setControl(false);
-			b2.setTarget(new Point.Double(b2.tip.x+200,b2.tip.y+100));
+			b2.setTarget(new Point.Double(b2.tip.x+200,b2.tip.y-200));
 			return true;
 		}else return false;
 	}else if(b2.contains(b1.getTip())){
 		if(b2.getBlockCD()==0){
 			b2.setBlockCD(b2.getBlock());
 			b1.setControl(false);
-			b1.setTarget(new Point.Double(b1.tip.x-200,b1.tip.y+100));
+			b1.setTarget(new Point.Double(b1.tip.x-200,b1.tip.y-200));
 			return true;
 		}else return false;
 	}else return false;

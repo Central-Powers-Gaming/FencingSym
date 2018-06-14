@@ -23,14 +23,14 @@ import java.awt.geom.Point2D.Double;
 class batl extends JPanel implements KeyListener, MouseListener{
 	static final int Tw=Toolkit.getDefaultToolkit().getScreenSize().width;
 	static final int Th=Toolkit.getDefaultToolkit().getScreenSize().height;
-	static Fencer player;
-	static RANDOM ai;
-	static double frames=0;	
-	static double time=System.currentTimeMillis();
-	static int level;
-	static Boolean toJump=false;
-	static Boolean AitoJump=false;
-	public Boolean dev=true;
+	private Fencer player;
+	private RANDOM ai;
+	private double frames=0;	
+	private double time=System.currentTimeMillis();
+	private int level;
+	private Boolean toJump=false;
+	private Boolean AitoJump=false;
+	private Boolean dev=false;
 	public batl(int level){
 		setFocusable( true );
 		this.addKeyListener(this);	
@@ -108,7 +108,7 @@ class batl extends JPanel implements KeyListener, MouseListener{
 	    	player.jump();	
 	    }
 	    if (event.getKeyCode() == KeyEvent.VK_ESCAPE){
-	    	int ans=JOptionPane.showOptionDialog(this, "Do you whish to return to the menu? Any progress will be lost.", "Confirmation", 0, 1,null,null,null);
+	    	int ans=JOptionPane.showOptionDialog(this, "Do you whish to return to the menu? Score will be saved.", "Confirmation", 0, 1,null,null,null);
 	    	//System.out.println("ans~~~~~~~~~~~~~~~~~~~ "+ans);
 	    	if(ans==0){
 	    		Main.main.setAlwaysOnTop(true);
@@ -272,6 +272,9 @@ class batl extends JPanel implements KeyListener, MouseListener{
 		if(ai.getSword().getTip().x>ai.getSword().getHandle().x){
 			ai.getSword().setTip(new Point.Double(ai.getSword().handle.x-(ai.getSword().getTip().x-ai.getSword().handle.x),ai.getSword().getTip().y));
 		}
+		if(ai.getSword().getTip().y>ai.y+155){
+			ai.getSword().setTip(new Point.Double(ai.getSword().getTip().x,ai.getSword().getTip().y-50));
+		}		
 		//System.out.println(player.getSword().getHandle().x+" "+player.getSword().getHandle().y+" "+player.getSword().getTip().x+" "+player.getSword().getTip().y);
 		g.drawLine((int)ai.getSword().getHandle().x, (int)ai.getSword().getHandle().y, (int)ai.getSword().getTip().x,(int) ai.getSword().getTip().y);
 		//~~~~~~~~~~~~~~~~~~~~~~~~Fencer Rendering~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -283,9 +286,15 @@ class batl extends JPanel implements KeyListener, MouseListener{
 		g.drawImage(cross,(int)Math.round(MouseInfo.getPointerInfo().getLocation().getX())-25,(int)Math.round(MouseInfo.getPointerInfo().getLocation().getY())-25,50,50, null);
 		//
 		//ai move
+		if(ai.x+155>Tw){
+			ai.x=Tw-155;
+		}
 		AitoJump=ai.control(player);
 		if(AitoJump==true){
 			AitoJump=ai.jump();
+		}
+		if(ai.y>ai.getGround()-150){
+			ai.y++;
 		}
 		//~~~~~~~~~~~~~~~~~~~~~~~~Colisions~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		player.getSword().colisionBlade(player.getSword(),ai.getSword());
@@ -343,7 +352,7 @@ class batl extends JPanel implements KeyListener, MouseListener{
 	throws: none
 	description: to maintain an 16:9 aspect ratio on all screens
 	*/
-	private int cal(){
+	private static int cal(){
 		int a;
 		double ratioW;
 		ratioW=((double)1600/(double)Tw);
@@ -367,9 +376,9 @@ class batl extends JPanel implements KeyListener, MouseListener{
 				FncP[i] = ImageIO.read(new File("f"+(i+1)+".png"));
 			}catch (IOException e) {e.printStackTrace();}
 		}
-		Fencer player=new Fencer(FncP, "Player", 3, Tw/3,Th*(0.60185185), 155,150,"A",10, 100, new Point.Double(Tw/3+155-5,Th*(0.60185185)+43) , new Point.Double(Tw/3+155+100-5,Th*(0.60185185)+43), 10, 10);
+		Fencer player=new Fencer(FncP, "Player", 3, Tw/3,Th*(0.60185185)-50, 155,150,"A",10, 100, new Point.Double(Tw/3+155-5,Th*(0.60185185)+43) , new Point.Double(Tw/3+155+100-5,Th*(0.60185185)+43), 10, 10);
 		player.frame=0;
-		player.setGround(Th*(0.743537037));
+		player.setGround(Th*(0.60185185)+150-50);
 		player.setScore(hold);
 		return player;
 	}
@@ -390,13 +399,11 @@ class batl extends JPanel implements KeyListener, MouseListener{
 			}catch (IOException e) {e.printStackTrace();}
 		}
 		//System.out.println("level                "+level);
-			RANDOM ai=new RANDOM(level+2,FncA,"RANDOM","AI",2,100,Tw*2/3,Th*(0.60185185),155,150,"A",15,new Point.Double(Tw*2/3,Th*(0.60185185)+43) , new Point.Double(Tw*2/3-100,Th*(0.60185185)+43), 5, 10);
+			RANDOM ai=new RANDOM(level+2,FncA,"RANDOM","AI",2,100,Tw*2/3,Th*(0.60185185)-50,155,150,"A",15,new Point.Double(Tw*2/3,Th*(0.60185185)+43) , new Point.Double(Tw*2/3-100,Th*(0.60185185)+43), 5, 10);
 			//case 2:ai=new AI(3,FncA,"EASY","AI",2,100,Tw*2/3,Th*(0.60185185),155,150,"A",100,new Point.Double(Tw*2/3,Th*(0.60185185)+43) , new Point.Double(Tw*2/3-100,Th*(0.60185185)+43), 5, 10);break;
 			//default: ai=new AI(3,FncA,"MIRROR","AI",2,100,Tw*2/3,Th*(0.60185185),155,150,"A",100,new Point.Double(Tw*2/3,Th*(0.60185185)+43) , new Point.Double(Tw*2/3-100,Th*(0.60185185)+43), 5, 10);break;
-			
-		
 		ai.frame=0;
-		ai.setGround(Th*(0.743537037));
+		ai.setGround(Th*(0.60185185)+150-50);
 		ai.setScore(hold);
 		return ai;
 	}
