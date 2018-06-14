@@ -27,10 +27,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-/**
- * FileManager Object
- * @author Isaac Dunn
- **/
+
 public class FileManager {
 	static int w = Toolkit.getDefaultToolkit().getScreenSize().width;//width of screen
 	static int l = Toolkit.getDefaultToolkit().getScreenSize().height;//height of screen
@@ -49,12 +46,7 @@ public class FileManager {
 	private static JPanel panel=new JPanel();//panel to hold buttons
 	
 	
-	/**
-	 * loadSave method that will load save information and get you into the game
-	 * @author Isaac
-	 * @param String
-	 * @return GameSave
-	 **/
+	
 	//name: loadSave
 	//parameters: String
 	//Returns: GameSave
@@ -100,10 +92,6 @@ public class FileManager {
 		return nm;
 		
 	}
-	/**
-	 * intialize, sets up the frame, panels, buttons, all the graphics
-	 * @author Isaac
-	 **/
 	//name: initialize
 	//parameters: none
 	//Returns: none
@@ -201,10 +189,6 @@ public class FileManager {
 	    main.pack();
 	    main.setVisible(true);	    
 	}
-	/**
-	 * Starts the entire menu
-	 * @author Isaac
-	 **/
 	//name: start
 	//parameters: none
 	//Returns: none
@@ -224,10 +208,6 @@ public class FileManager {
 	    initialize();
 		initEvent();	   
 	}
-	/**
-	 * Sets up the actionlisteners for the menu
-	 * @author Tim
-	 **/
 	//name: initEvent
 	//parameters: none
 	//Returns: none
@@ -285,10 +265,6 @@ public class FileManager {
 		});
 	    
 	}
-	/**
-	 * Constructor for class
-	 * @author Isaac
-	 **/
 	//name: FileManager
 	//parameters: none
 	//Returns: none

@@ -95,6 +95,7 @@ public void lunge(Fencer enemy){
 			Sword.tip=new Point.Double(width+x+Sword.getLength(),height/2);
 			Sword.handle=new Point.Double(x+width,height/2);
 		}Sword.lungeCD=Sword.getLunge();
+		Sword.setLungeCD(Sword.getLunge());
 	}
 }
 //FencerControl
