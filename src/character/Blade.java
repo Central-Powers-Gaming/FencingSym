@@ -3,7 +3,7 @@ package character;
 //Date Created: June. 1, 2018
 //Last modified: June. 14, 2018
 //Fencing Simulator 2018
-//program: Dr. Evil and Batman with Richard Dean Anderson star in: Fencing Symulator 2K18: Stabby Mc Kill Die Too: Electric Boogaloo: The Phantom Menace: Attack of the Clones: Revenge of the Sith: Wrath of Khan Part 2: Dead Man’s Chest: The third one, part 7 of 9 in the trilogy: Prequel to the Quran, by Sun Tzu and Robert Munch With Samuel L Jackson as Based on a true story as told by Tommy Wiseau
+//program: Dr. Evil and Batman with Richard Dean Anderson star in: Fencing Symulator 2K18: Stabby Mc Kill Die Too: Electric Boogaloo: The Phantom Menace: Attack of the Clones: Revenge of the Sith: Wrath of Khan Part 2: Dead Manâ€™s Chest: The third one, part 7 of 9 in the trilogy: Prequel to the Quran, by Sun Tzu and Robert Munch With Samuel L Jackson as Based on a true story as told by Tommy Wiseau
 import java.awt.Point;
 import java.awt.geom.Line2D;
 import java.awt.image.BufferedImage;
@@ -289,47 +289,101 @@ public void setTip(Point.Double tip) {
 public int getLunge() {
 	return lunge;
 }
+/**
+* @author Brad
+* @param int lunge
+**/
 public void setLunge(int lunge) {
 	this.lunge = lunge;
 }
-
+/**
+* @author Brad
+* @return Point.Double
+**/
 public Point.Double getTarget() {
 	return target;
 }
-
+/**
+* @author Brad
+* @return boolean
+**/
 public boolean isControl() {
 	return control;
 }
+/**
+* @author Brad
+* @return Line2D.Double
+**/
 public Line2D.Double getLine() {
 	return line;
 }
+/**
+* @author Brad
+* @return double
+**/
 public double getLength() {
 	return length;
 }
+/**
+* @author Brad
+* @return int
+**/
 public int getBlock() {
 	return block;
 }
+/**
+* @author Brad
+* @return int
+**/
 public int getBlockCD() {
 	return blockCD;
 }
+/**
+* @author Brad
+* @param int
+**/
 public void setBlockCD(int blockCD) {
 	this.blockCD = blockCD;
 }
+/**
+* @author Brad
+* @return int
+**/
 public int getLungeCD() {
 	return lungeCD;
 }
+/**
+* @author Brad
+* @param int
+**/
 public void setLungeCD(int lungeCD) {
 	this.lungeCD = lungeCD;
 }
+/**
+* @author Brad
+* @param boolean
+**/
 private void setControl(boolean control) {
 	this.control = control;
 }
+/**
+* @author Brad
+* @return string
+**/
 public String getName(){
 	return Name;
 }
+/**
+* @author Brad
+* @param string
+**/
 public void setName(String Name){
 	this.Name=Name;
 }
+/**
+*constructor for class
+* @author Brad
+**/
 void printVariables(){
 	System.out.println(Name+" length:"+length);
 	System.out.println(Name+" speed:"+Speed);
@@ -340,6 +394,10 @@ void printVariables(){
 	System.out.println(Name+" Block:"+block);
 	System.out.println(Name+" lunge:"+lunge);
 }
+/**
+*constructor for class
+* @author Brad
+**/
 void printVariables(String name){
 	System.out.println(name+" length:"+length);
 	System.out.println(name+" speed:"+Speed);
@@ -350,12 +408,25 @@ void printVariables(String name){
 	System.out.println(name+" Block:"+block);
 	System.out.println(name+" lunge:"+lunge);
 }
+/**
+* @author Brad
+* @return double
+**/
 public double checkLength(){
 	return Math.sqrt((this.tip.x-handle.x)*(this.tip.x-handle.x)+(this.tip.y-handle.y)*(this.tip.y-handle.y));
 }
+/**
+* @author Brad
+* @return double
+**/
 public double checkLength(Point.Double tip,Point.Double handle){
 	return Math.sqrt((tip.x-handle.x)*(tip.x-handle.x)+(tip.y-handle.y)*(tip.y-handle.y));
 }
+/**
+* @author Brad
+* @param double
+* @return boolean
+**/
 private boolean distanceCheck(Point.Double tip){
 	double x=Math.sqrt((tip.x-handle.x)*(tip.x-handle.x)+(tip.y-handle.y)*(tip.y-handle.y));
 	return length==x;
